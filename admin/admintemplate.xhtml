@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:a="http://richfaces.org/a4j"
+   xmlns:rich="http://richfaces.org/rich"
+   xmlns:s="http://jboss.com/products/seam/taglib"
+   contentType="text/html">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Transport</title>
+      <link rel="stylesheet" type="text/css" href="../stylesheet/style.css" />
+      <a:loadStyle src="/stylesheet/theme.xcss"/>
+      <a:loadStyle src="/stylesheet/theme.css"/>
+      <ui:insert name="head"/>
+   </head>
+   <body>
+   <s:div rendered="#{identity.loggedIn and (identity.hasRole('ADMIN')) }">
+      <ui:include src="adminmenu.xhtml" >
+         <ui:param name="projectName" value="transport"/>
+      </ui:include>
+      </s:div>
+      <div class="body">
+      <center>
+         <h:messages id="messages" globalOnly="true" styleClass="message"
+            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+            rendered="#{showGlobalMessages != 'false'}"/>
+          </center>  
+             <table width="100%" cellspacing="23">
+            <tr>
+            <td width="12%" valign="top" >
+            <h:form>
+            <rich:panel id="menuId">
+            <table >
+            
+            <tr>
+            <td>
+            
+            
+            <s:link styleClass= "linkText" value="Home" view="/admin/adminhome.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            <tr>
+            <td>
+            
+            
+            <s:link styleClass= "linkText" value="Manage Operators" view="/admin/Company.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            <tr>
+            <td>
+            
+            
+            <s:link styleClass= "linkText" value="Users" view="/admin/UsersDataList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Customers" view="/admin/CustomersDataList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Journey Type" view="/admin/JourneyTypeList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Model Type" view="/admin/ModelTypeList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Seating Type" view="/admin/SeatingTypeList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Service Type" view="/admin/ServiceTypeList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Routes" view="/admin/locationpoints.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            
+            <tr>
+            <td>
+            
+            
+            <h:commandLink  styleClass= "linkText" value="Transport" action="/admin/TransportList.xhtml" actionListener="#{transportAction.startPage}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            
+               <tr>
+            <td>
+            
+            
+            <h:commandLink  styleClass= "linkText" value="Bookings" action="/admin/bookingList.xhtml" actionListener="#{bookingAction.startPage}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+              <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Enquiries" view="/admin/EnquiriesTypeList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Comments" view="/admin/CustomerCommentsList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Testimonials" view="/admin/TestimonialsList.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+              <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Track SMS" view="/admin/SmsHistory.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+             <tr>
+            <td>
+            
+            
+            <s:link  styleClass= "linkText" value="Track Email" view="/admin/EmailHistory.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            </table>
+            </rich:panel>
+            </h:form>
+            </td>
+            <td width="88%"  valign="top">
+            <rich:panel id="contentId">
+            <ui:insert name="body"/>
+            </rich:panel>
+            </td>
+            </tr>
+            </table>
+         
+          
+      </div>
+      <div class="footer">
+        
+      </div>
+      <ui:include src="processing.xhtml" />
+   </body>
+</html>
+</f:view>

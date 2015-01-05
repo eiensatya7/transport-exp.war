@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:a="http://richfaces.org/a4j"
+   xmlns:rich="http://richfaces.org/rich"
+   xmlns:s="http://jboss.com/products/seam/taglib"
+   contentType="text/html">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Transport</title>
+       <link rel="stylesheet" type="text/css" href="../stylesheet/style.css" />
+      <a:loadStyle src="/stylesheet/theme.xcss"/>
+      <a:loadStyle src="/stylesheet/theme.css"/>
+      <ui:insert name="head"/>
+      
+      <style type="text/css">
+      .refreshText{
+font-family: Arial;
+font-size: 16px;
+color: #454545;
+padding: 12px 0px 12px 20px;
+
+}
+
+.dashlinkText{
+	line-height:28px;
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size:21px; 
+	font-weight:bold; 
+	color:#228246; 
+	text-decoration: none;
+}
+
+      
+      </style>
+      
+   </head>
+   <body>
+   <s:div rendered="#{identity.loggedIn and (identity.hasRole('CUSTOMERCARE')) }">
+      <ui:include src="ccaremenu.xhtml" >
+         <ui:param name="projectName" value="transport"/>
+      </ui:include>
+      <br/><br/>
+      <a:form id="pollId">
+      <a:poll id="poll" interval="15000" action="#{ccareHomeAction.generateHomeReports}" reRender="reportId" ajaxSingle="true"  immediate="true" bypassUpdates="true"/>
+      </a:form>
+      <rich:panel>
+      <h:form>
+      <s:span id="reportId" styleClass="refreshText">
+      <center><table width="850px" border="0">
+      <tr>
+      <td>
+      Pending Bookings Count: <h:commandLink styleClass="dashlinkText" value="(#{ccareHomeAction.pendingBookingsCount})" actionListener="#{bookingAction.searchCcareDashBoard('PENDING')}" action="/ccare/bookinglist.xhtml"/>
+      </td>
+      
+       <td align="right">
+      Cancel Requested Bookings Count: <h:commandLink styleClass="dashlinkText" value="(#{ccareHomeAction.cancelledRequestBookingsCount})" actionListener="#{bookingAction.searchCcareDashBoard('CANCEL REQUESTED')}" action="/ccare/bookinglist.xhtml"/>
+      </td>
+      </tr>
+      </table></center>
+      </s:span>
+      </h:form>
+      </rich:panel>
+      </s:div>
+      <div class="body">
+      <center>
+         <h:messages id="messages" globalOnly="true" styleClass="message"
+            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+            rendered="#{showGlobalMessages != 'false'}"/>
+            </center>
+            <table width="100%" cellspacing="23">
+            <tr>
+            <td width="10%" valign="top" >
+            <rich:panel id="menuId">
+            <table >
+            
+            <tr>
+            <td>
+            
+            
+            <s:link styleClass= "linkText" value="Home" view="/ccare/ccarehome.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            
+             <tr>
+            <td>
+            
+            
+            <s:link styleClass= "linkText" value="Bookings" view="/ccare/bookinglist.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+            
+              
+            </td>
+            </tr>
+            
+            
+            
+            
+            
+            
+            </table>
+            </rich:panel>
+            </td>
+            <td width="90%"  valign="top">
+            <rich:panel id="contentId">
+            <ui:insert name="body"/>
+            </rich:panel>
+            </td>
+            </tr>
+            </table>
+         
+      </div>
+      <div class="footer">
+        
+      </div>
+      <ui:include src="processing.xhtml" />
+   </body>
+</html>
+</f:view>

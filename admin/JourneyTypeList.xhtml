@@ -1,0 +1,199 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="admintemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="journeyTypeSearch" styleClass="edit">
+
+       <center><table><tr><td>
+         
+                <h:inputText id="journeyTypeName" value="#{journeyTypeAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="journeyId" action="#{journeyTypeAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td>
+			<center>	<h:outputText value="(Search using Journey Type)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="journeyId">
+        <f:facet name="header">Journey Type Search Results (#{empty journeyTypeAction.journeyTypeList ? 0 : journeyTypeAction.journeyTypeList.size})</f:facet>
+    <div class="results" id="journeyTypeList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty journeyTypeAction.journeyTypeList}"/>
+
+    <rich:dataTable id="journeyTypeList"
+                var="_journeyType"
+                rowKeyVar="row"
+              value="#{journeyTypeAction.journeyTypeList}"
+           rendered="#{not empty journeyTypeAction.journeyTypeList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Journey Type
+            </f:facet>
+            <h:outputText value="#{_journeyType.journeyType}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Created Time
+            </f:facet>
+            <h:outputText value="#{_journeyType.createdTime}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">
+               Last Updated Time
+            </f:facet>
+            <h:outputText value="#{_journeyType.updatedTime}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{journeyTypeAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="journeyTypeId"
+                        value="#{_journeyType.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{journeyTypeAction.remove}" reRender="journeyId" onclick="if(!confirm('Are you really want to delete?')){return false;}" >
+                <f:param name="journeyTypeId"
+                        value="#{_journeyType.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" id="create" value="Create" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" action="#{journeyTypeAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="journeyType" styleClass="edit" rendered="#{journeyTypeAction.formDisplayed eq true}">
+
+        <rich:panel>
+            <f:facet name="header">#{journeyTypeAction.journeyType.id ne null ? 'Edit' : 'Add'} Journey type</f:facet>
+
+
+
+          
+
+            <s:decorate id="journeyTypeField" template="edit.xhtml">
+                <ui:define name="label">Journey type</ui:define>
+                <h:inputText id="journeyType"
+                           size="45"
+                      maxlength="45"
+                          value="#{journeyTypeAction.journeyType.journeyType}" required="true">
+                    <a4j:support event="onblur" reRender="journeyTypeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{journeyTypeAction.persist}"
+                         rendered="#{journeyTypeAction.journeyType.id eq null}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,journeyId"
+                         status="saveorupdateStatus"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{journeyTypeAction.update}"
+                       rendered="#{journeyTypeAction.journeyType.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       reRender="createId,journeyId"
+                       status="saveorupdateStatus"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true" status="saveorupdateStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{journeyTypeAction.formDisplayed}" /> 
+             </a4j:commandButton>   
+            
+            <br/><br/>
+			 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="saveorupdateStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

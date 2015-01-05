@@ -1,0 +1,723 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="operatortemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="transportSearch" styleClass="edit">
+
+       <center>
+<s:div id="searchFilterId">
+<table border="0" style=" width : 510px;" cellspacing="7">
+		<tr>
+			<td colspan="2">
+			</td>
+		</tr>
+		<tr><td>
+  					
+					</td><td>
+					<h:selectOneMenu id="modelsearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.modelsearchid}" >					
+						<s:selectItems value="#{transportAction.modelList}" var="mo" label="#{mo.model}" itemValue="#{mo.id}" noSelectionLabel="--Select Model--"/>
+							
+				
+					</h:selectOneMenu>	
+		</td>
+				</tr><tr><td>
+			
+				
+				<h:selectOneMenu id="seatingsearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.seatingsearchid}" >					
+						<s:selectItems value="#{transportAction.seatingTypeList}" var="stg" label="#{stg.count}" itemValue="#{stg.id}" noSelectionLabel="--Select Seating Type--"/>
+							
+				
+					</h:selectOneMenu>		
+				
+				</td><td>
+				
+					 <h:selectOneMenu id="journeysearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.journeysearchid}" >				
+						<s:selectItems value="#{transportAction.journeyTypeList}" var="jr" label="#{jr.journeyType}" itemValue="#{jr.id}" noSelectionLabel="--Select Journey Type--"/>
+							
+				
+					</h:selectOneMenu>		
+				
+			
+			
+		</td></tr>
+		
+		<tr><td>
+  					<h:selectOneMenu id="fuelsearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.fuelsearch}" >					
+						
+	           		<f:selectItem itemLabel="--Select Fuel--" itemValue=""/>
+	                 <f:selectItem itemLabel="PETROL" itemValue="PETROL"/>
+	                <f:selectItem itemLabel="DIESEL" itemValue="DIESEL"/>
+	                
+						
+					</h:selectOneMenu>
+					</td><td>
+					<h:selectOneMenu id="comfortsearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.comfortsearch}" >					
+						 <f:selectItem itemLabel="--Select Comfort--" itemValue=""/>
+						 <f:selectItem itemLabel="A/C" itemValue="A/C"/>
+	                     <f:selectItem itemLabel="NON A/C" itemValue="NON A/C"/>
+				
+					</h:selectOneMenu>	
+		</td>
+				</tr>
+		
+		<tr>
+		 <td>
+		 		<h:selectOneMenu id="driversearchId" style="font-size:8pt; width :170px;"  value="#{transportAction.driversearchid}" >				
+						<s:selectItems value="#{transportAction.driverList}" var="dr" label="#{dr.name}" itemValue="#{dr.id}" noSelectionLabel="--Select Driver--"/>
+						
+				
+					</h:selectOneMenu>		
+		 </td>
+		
+		<td >	
+          <h:inputText id="transportName" value="#{transportAction.searchString}" style="width:170px"/>&#160;&#160;&#160;&#160;&#160;&#160;
+        <span class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="tpId" action="#{transportAction.search}"/></span>
+         <span class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</span>
+      </td>
+      
+     </tr>
+      
+      <tr> <td colspan="4" ><center> <h:outputText>(Search using color, model year)</h:outputText></center>
+     </td>     
+  </tr></table>
+  </s:div></center> 
+
+
+
+    <rich:panel id="tpId">
+        <f:facet name="header">Transport Search Results (#{empty transportAction.transportList ? 0 : transportAction.transportList.size})</f:facet>
+    <div class="results" id="transportList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty transportAction.transportList}"/>
+
+    <rich:dataTable id="transportList"
+                var="_tp"
+                rowKeyVar="row"
+              value="#{transportAction.transportList}"
+           rendered="#{not empty transportAction.transportList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        
+         <h:column>
+            <f:facet name="header">
+               Seating
+            </f:facet>
+            <h:outputText value="#{_tp.count}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Journey Type
+            </f:facet>
+            <h:outputText value="#{_tp.journeyTypeName}"/>
+        </h:column>
+         <h:column>
+            <f:facet name="header">
+               Model
+            </f:facet>
+            <h:outputText value="#{_tp.model}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Color
+            </f:facet>
+            <h:outputText value="#{_tp.colour}"/>
+        </h:column>
+        
+        
+         <h:column>
+            <f:facet name="header">
+              Year
+            </f:facet>
+            <h:outputText value="#{_tp.modelYear}"/>
+        </h:column>
+       
+        <h:column>
+            <f:facet name="header">
+               Fuel Type
+            </f:facet>
+            <h:outputText value="#{_tp.fuelType}"/>
+        </h:column>
+       
+       
+        <h:column>
+            <f:facet name="header">
+               Comfort
+            </f:facet>
+            <h:outputText value="#{_tp.comfortType}"/>
+        </h:column>
+       
+        
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{transportAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="transportId"
+                        value="#{_tp.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{transportAction.remove}" reRender="tpId" onclick="if(!confirm('Are you really want to delete?')){return false;}">
+                <f:param name="transportId"
+                        value="#{_tp.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Assign Routes" action="#{transportAction.initAssign}" reRender="routeId,assignedrouteId" onclick="Richfaces.showModalPanel('assignPanel')">
+                <f:param name="transportId"
+                        value="#{_tp.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{transportAction.init}" reRender="createId,formPanel"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="transport" styleClass="edit" rendered="#{transportAction.formDisplayed eq true}">
+ 
+ 
+        <rich:panel id="formPanel">
+        
+         
+        
+        
+        
+            <f:facet name="header">#{transportAction.transport.id ne null ? 'Edit' : 'Add'} Transport</f:facet>
+
+              <s:decorate id="modelField1" template="edit.xhtml">
+             	<ui:define name="label">Select Model</ui:define>
+             		<h:selectOneMenu id="modelId" style="font-size:8pt; width :170px;"  value="#{transportAction.modelid}" required="true">					
+						<s:selectItems value="#{transportAction.modelList}" var="mo" label="#{mo.model}" itemValue="#{mo.id}" noSelectionLabel="--Select Model--"/>
+							<a4j:support event="onchange" reRender="modelField1"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>			
+             </s:decorate>
+             
+             
+              <s:decorate id="seatingField1" template="edit.xhtml">
+             	<ui:define name="label">Select Seating Type</ui:define>
+             			<h:selectOneMenu id="seatingId" style="font-size:8pt; width :170px;"  value="#{transportAction.seatingid}" required="true">					
+						<s:selectItems value="#{transportAction.seatingTypeList}" var="stg" label="#{stg.count}" itemValue="#{stg.id}" noSelectionLabel="--Select Seating Type--"/>
+							<a4j:support event="onchange" reRender="seatingField1"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>					
+             </s:decorate>
+             
+             
+             <s:decorate id="journeyField1" template="edit.xhtml">
+             	<ui:define name="label">Select Journey Type</ui:define>
+             			 <h:selectOneMenu id="journeyId" style="font-size:8pt; width :170px;"  value="#{transportAction.journeyid}" required="true">				
+						<s:selectItems value="#{transportAction.journeyTypeList}" var="jr" label="#{jr.journeyType}" itemValue="#{jr.id}" noSelectionLabel="--Select Journey Type--"/>
+							<a4j:support event="onchange" reRender="journeyField1"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>				
+             </s:decorate>
+             
+             
+              <s:decorate id="driverField1" template="edit.xhtml">
+             	<ui:define name="label">Select Driver</ui:define>
+             				<h:selectOneMenu id="driverId" style="font-size:8pt; width :170px;"  value="#{transportAction.driverid}" >				
+						<s:selectItems value="#{transportAction.driverList}" var="dr" label="#{dr.name}" itemValue="#{dr.id}" noSelectionLabel="--Select Driver--"/>
+							<a4j:support event="onchange" reRender="driverField1"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>				
+             </s:decorate>
+             
+            <s:decorate id="transportField1" template="edit.xhtml">
+                <ui:define name="label">Color</ui:define>
+                <h:inputText id="transport1"
+                           size="15"
+                      maxlength="45"
+                          value="#{transportAction.transport.colour}" required="true">
+                    <a4j:support event="onblur" reRender="transportField1" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            
+            <s:decorate id="transportField2" template="edit.xhtml">
+                <ui:define name="label">Model Year</ui:define>
+                 <h:selectOneMenu value="#{transportAction.transport.modelYear}" required="true">
+	           		
+	                <f:selectItem itemLabel="2014" itemValue="2014"/>
+	                 <f:selectItem itemLabel="2013" itemValue="2013"/>
+	                  <f:selectItem itemLabel="2012" itemValue="2012"/>
+	                   <f:selectItem itemLabel="2011" itemValue="2011"/>
+	                    <f:selectItem itemLabel="2010" itemValue="2010"/>
+	                     <f:selectItem itemLabel="2009" itemValue="2009"/>
+	                      <f:selectItem itemLabel="2008" itemValue="2008"/>
+	                       <f:selectItem itemLabel="2007" itemValue="2007"/>
+	                        <f:selectItem itemLabel="2006" itemValue="2006"/>
+	                         <f:selectItem itemLabel="2005" itemValue="2005"/>
+	                          <f:selectItem itemLabel="2004" itemValue="2004"/>
+	                           <f:selectItem itemLabel="2003" itemValue="2003"/>
+	                            <f:selectItem itemLabel="2002" itemValue="2002"/>
+	                             <f:selectItem itemLabel="2001" itemValue="2001"/>
+	                              <f:selectItem itemLabel="2000" itemValue="2000"/>
+	                               <f:selectItem itemLabel="1999" itemValue="1999"/>
+	                                <f:selectItem itemLabel="1998" itemValue="1998"/>
+	                                 <f:selectItem itemLabel="1997" itemValue="1997"/>
+	                                  <f:selectItem itemLabel="1996" itemValue="1996"/>
+	                                   <f:selectItem itemLabel="1995" itemValue="1995"/>
+	                                    <f:selectItem itemLabel="1994" itemValue="1994"/>
+	                                     <f:selectItem itemLabel="1993" itemValue="1993"/>
+	                                      <f:selectItem itemLabel="1992" itemValue="1992"/>
+	                                       <f:selectItem itemLabel="1991" itemValue="1991"/>
+	                                      <f:selectItem itemLabel="1990" itemValue="1990"/>
+	                                      
+	                
+	                 <a4j:support event="onblur" reRender="transportField2" bypassUpdates="true" ajaxSingle="true"/>
+                </h:selectOneMenu>
+               
+            </s:decorate>
+            
+           <s:decorate id="transportField3" template="edit.xhtml">
+                <ui:define name="label">No Of Wheels</ui:define>
+                <h:inputText id="transport3"
+                           size="10"
+                      maxlength="45"
+                          value="#{transportAction.transport.noOfWheels}" required="true">
+                    <a4j:support event="onblur" reRender="transportField3" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="transportField151" template="edit.xhtml">
+                <ui:define name="label">Default Fare / KM </ui:define>
+                <h:inputText id="transport3"
+                           size="10"
+                      maxlength="45"
+                          value="#{transportAction.transport.defaultFarePerKm}" required="true">
+                    <a4j:support event="onblur" reRender="transportField151" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+                              
+            </s:decorate>
+            
+            <s:decorate id="transportField4" template="edit.xhtml">
+                <ui:define name="label">Fuel Type</ui:define>
+                <h:selectOneMenu value="#{transportAction.transport.fuelType}" >
+	           		
+	                <f:selectItem itemLabel="PETROL" itemValue="PETROL"/>
+	                <f:selectItem itemLabel="DIESEL" itemValue="DIESEL"/>
+	                
+	                <a4j:support event="onblur" reRender="transportField4" bypassUpdates="true" ajaxSingle="true"/>
+                </h:selectOneMenu>
+               </s:decorate>
+                
+          
+            
+             <s:decorate id="transportField15" template="edit.xhtml">
+                <ui:define name="label">Comfort</ui:define>
+                 <h:selectOneMenu value="#{transportAction.transport.comfortType}" >
+	           		
+	                <f:selectItem itemLabel="A/C" itemValue="A/C"/>
+	                <f:selectItem itemLabel="NON A/C" itemValue="NON A/C"/>
+	                
+	                 <a4j:support event="onblur" reRender="transportField15" bypassUpdates="true" ajaxSingle="true"/>
+                </h:selectOneMenu>
+              
+            </s:decorate>
+            
+            
+            <s:decorate id="servicetypeField4" template="edit.xhtml">
+                <ui:define name="label">Service Type</ui:define>
+		            <h:selectManyCheckbox value="#{transportAction.dataList}">
+		            	<f:selectItem itemValue="P2P" itemLabel="Point To Point" />
+		            	<f:selectItem itemValue="AIRPORT" itemLabel="AirPort" />
+			   			<f:selectItem itemValue="PACKAGE" itemLabel="Package" />
+			   			<f:selectItem itemValue="OUTSTATION" itemLabel="Out Station"/>
+			   			<a4j:support event="onclick" reRender="temp"  ajaxSingle="true" />
+		   			</h:selectManyCheckbox>
+		   	</s:decorate>	
+   			
+   		<a4j:outputPanel id="temp">
+            <br/><br/>
+            
+            
+            <s:div id="ptop" rendered="#{transportAction.containsValue('P2P')}">
+            
+            <s:decorate id="ptopdec" template="edit.xhtml">
+                <ui:define name="label"><h3>Point To Point</h3></ui:define>
+            </s:decorate>
+            
+	             <s:decorate id="ptopfare" template="edit.xhtml">
+	                <ui:define name="label">Fare Per KM</ui:define>
+	                <h:inputText id="ptopfareid"
+	                           size="45"
+	                      maxlength="45"
+	                      required="true"
+	                          value="#{transportAction.transportPointtopoint.farePerKm}">
+	                    <a4j:support event="onblur" reRender="ptopfare" bypassUpdates="true" ajaxSingle="true"/>
+	                </h:inputText>
+	            </s:decorate>
+	         
+            
+            </s:div>
+            
+            <s:div id="airport" rendered="#{transportAction.containsValue('AIRPORT')}">
+            
+             <s:decorate id="airportdec" template="edit.xhtml">
+                <ui:define name="label"><h3>Airport</h3></ui:define>
+            </s:decorate>
+            <s:decorate id="airportfare" template="edit.xhtml">
+                <ui:define name="label">Fare Per KM</ui:define>
+                <h:inputText id="airportfareid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportAirport.farePerKm}">
+                    <a4j:support event="onblur" reRender="airportfare" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            
+            <s:decorate id="airportparking" template="edit.xhtml">
+                <ui:define name="label">Parking Charges</ui:define>
+                <h:inputText id="airportparkingid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportAirport.parkingCharge}">
+                    <a4j:support event="onblur" reRender="airportparking" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            
+            
+            
+            <s:decorate id="airportreduction" template="edit.xhtml">
+                <ui:define name="label">Two way Reduction</ui:define>
+                <h:inputText id="airportreductionid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportAirport.twowayReduction}">
+                    <a4j:support event="onblur" reRender="airportreduction" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+           
+            </s:div>
+            
+            
+            <s:div id="package" rendered="#{transportAction.containsValue('PACKAGE')}">
+            
+             <s:decorate id="packagedec" template="edit.xhtml">
+                <ui:define name="label"><h3>Packaged</h3></ui:define>
+            </s:decorate>
+             
+             <s:decorate id="packagefare" template="edit.xhtml">
+                <ui:define name="label">Fare Per Hour</ui:define>
+                <h:inputText id="packagefareid"
+                           size="45"
+                           required="true"
+                      maxlength="45"
+                          value="#{transportAction.transportPackage.farePerHour}">
+                    <a4j:support event="onblur" reRender="packagefare" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="packagehours" template="edit.xhtml" rendered="false">
+                <ui:define name="label">No of Hours</ui:define>
+                <h:inputText id="packagehoursid"
+                           size="45"
+                           required="true"
+                      maxlength="45"
+                          value="#{transportAction.transportPackage.noOfHours}">
+                    <a4j:support event="onblur" reRender="packagehours" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="percentageincreasefare" template="edit.xhtml" rendered="false">
+                <ui:define name="label">Increase in Fare(%)</ui:define>
+                <h:inputText id="percentageincreasefareid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportPackage.farePercentageIncreaseThresholdLevel}">
+                    <a4j:support event="onblur" reRender="percentageincreasefare" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+          
+          </s:div>   
+             
+           <s:div id="outstation" rendered="#{transportAction.containsValue('OUTSTATION')}">
+            
+              <s:decorate id="outstationdec" template="edit.xhtml">
+                <ui:define name="label"><h3>Out Station</h3></ui:define>
+            </s:decorate>     
+             
+            
+            <s:decorate id="outstationfare" template="edit.xhtml">
+                <ui:define name="label">Fare Per KM</ui:define>
+                <h:inputText id="outstationfareid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportOutstation.farePerKm}">
+                    <a4j:support event="onblur" reRender="outstationfare" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            
+            <s:decorate id="outstationduration" template="edit.xhtml" rendered="false">
+                <ui:define name="label">Duration</ui:define>
+                <h:inputText id="outstationdurationid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportOutstation.duration}">
+                    <a4j:support event="onblur" reRender="outstationduration" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="outstationhaltprice" template="edit.xhtml">
+                <ui:define name="label">Min. Billable KM/day</ui:define>
+                <h:inputText id="outstationhaltpriceid"
+                           size="45"
+                           required="true"
+                      maxlength="45"
+                          value="#{transportAction.transportOutstation.minimumBillableKmPerDay}">
+                    <a4j:support event="onblur" reRender="outstationhaltprice" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="outstationdriverfee" template="edit.xhtml">
+                <ui:define name="label">Driver Fee</ui:define>
+                <h:inputText id="outstationdriverfeeid"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{transportAction.transportOutstation.driverFee}">
+                    <a4j:support event="onblur" reRender="outstationdriverfee" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            </s:div>
+            
+            
+            
+            
+            
+           
+            
+	</a4j:outputPanel>
+
+<s:decorate id="dummy" template="edit.xhtml">
+                <ui:define name="label"></ui:define>
+                </s:decorate>
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{transportAction.persist}"
+                         rendered="#{transportAction.transport.id eq null}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         status="saveorupdateStatus"
+                         reRender="createId,tpId,searchFilterId"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{transportAction.update}"
+                       rendered="#{transportAction.transport.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       status="saveorupdateStatus"
+                       reRender="createId,tpId,searchFilterId"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true" status="saveorupdateStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{transportAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+			<br/><br/>
+			 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="saveorupdateStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+ 
+ 
+ <rich:modalPanel zindex="2000" id="assignPanel" width="750" height="700" style="overflow:scroll;" >
+ <h:commandButton image="../img/false.png" onclick="Richfaces.hideModalPanel('assignPanel')"/>
+ <s:div id="alertId">
+ <h:messages globalOnly="true" styleClass="message" id="globalMessagesPanel" errorStyle="color:red" infoStyle="color:green"/>
+ </s:div>
+ <a4j:form>
+ <br/>
+ 
+ <rich:panel id="assignedrouteId">
+        <f:facet name="header">Assigned Routes</f:facet>
+        <center><b><h:outputText value="No Routes assigned yet" rendered="#{transportAction.assignedlocationpointList.size le '0'}"></h:outputText></b></center>
+        <rich:dataTable var="alp" value="#{transportAction.assignedlocationpointList}" rendered="#{transportAction.assignedlocationpointList.size gt '0'}">
+			   <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Source
+            </f:facet>
+            <h:outputText value="#{alp.sourceName}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Destination
+            </f:facet>
+            <h:outputText value="#{alp.destName}">
+                
+            </h:outputText>
+        </h:column>
+        
+         <h:column>
+            <f:facet name="header">
+                Distance
+            </f:facet>
+            <h:outputText value="#{alp.distance}">
+                
+            </h:outputText>
+        </h:column>
+        
+        
+        <h:column>
+            <f:facet name="header">
+                Service Type
+            </f:facet>
+            <h:outputText value="#{alp.nameType}">
+                
+            </h:outputText>
+        </h:column>
+	    
+	     <h:column>
+	      <f:facet name="header">
+                Action
+            </f:facet>   
+	     <a4j:commandLink value="Remove" action="#{transportAction.removeRoute}" reRender="assignedrouteId,alertId" onclick="if(!confirm('Are you really want to remove route associated?')){return false;}">
+                <f:param name="locationPointId"
+                        value="#{alp.id}"/>
+            </a4j:commandLink>  
+            </h:column>  
+          </rich:dataTable>
+        
+        
+        
+ </rich:panel>
+ 
+  <br/>
+  
+ <rich:panel id="routeId">
+        <f:facet name="header">Assign Routes</f:facet>
+        
+        
+ 
+ <center><table>
+       <tr><td colspan="3" align="center">
+       
+                    <b>Select Service Type: </b>#{' '}
+  					<h:selectOneMenu id="serviceTypeId" style="font-size:8pt; width :170px;"  value="#{transportAction.servicesearchid}" >					
+						<s:selectItems value="#{transportAction.serviceTypes}" var="servicetype" label="#{servicetype.nameType}" itemValue="#{servicetype.id}" noSelectionLabel="--Select Service Type--"/>
+						<a4j:support event="onchange" action="#{transportAction.assignRoutes}" reRender="typeListId,alertId" />
+					</h:selectOneMenu>
+					
+					</td>
+					
+       </tr>
+       </table>
+       </center>
+       <br/>
+      <s:div id="typeListId"> 
+      
+		  <rich:dataTable var="lp" value="#{transportAction.locationpointList}" rendered="#{transportAction.locationpointList.size gt '0'}">
+			  <rich:column style="width:15px;">
+	            <f:facet name="header">
+	                Select
+	            </f:facet>
+	            <h:selectBooleanCheckbox value="#{lp.selected}" />
+	          </rich:column>
+	          
+	          <rich:column>
+	            <f:facet name="header">
+	                Route Name
+	            </f:facet>
+	            <h:outputText value="#{lp.sourceName} to #{lp.destName}"/>
+	          </rich:column>
+        
+		     
+        	
+          </rich:dataTable>
+      
+      <br/>
+      
+      <center>
+       <a4j:commandButton value="Assign Routes" action="#{transportAction.assignSelected}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         
+                         reRender="routeId,alertId,assignedrouteId"/>
+      </center>
+       </s:div>
+       </rich:panel>
+       </a4j:form>
+ </rich:modalPanel>
+
+</ui:define>
+
+</ui:composition>

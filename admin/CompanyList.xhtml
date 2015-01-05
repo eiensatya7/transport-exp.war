@@ -1,0 +1,224 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="admintemplate.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="companySearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Company Search Filter" switchType="ajax">
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputText id="address" value="#{companyList.company.address}"/>
+            </s:decorate>
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Contact number</ui:define>
+                <h:inputText id="contactNumber" value="#{companyList.company.contactNumber}"/>
+            </s:decorate>
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="emailId" value="#{companyList.company.emailId}"/>
+            </s:decorate>
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name" value="#{companyList.company.name}"/>
+            </s:decorate>
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Website</ui:define>
+                <h:inputText id="website" value="#{companyList.company.website}"/>
+            </s:decorate>
+
+            <s:decorate template="display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{companyList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/CompanyList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Company Search Results (#{empty companyList.resultList ? 0 : (companyList.paginated ? companyList.resultCount : companyList.resultList.size)})</f:facet>
+    <div class="results" id="companyList">
+
+    <h:outputText value="The company search returned no results."
+               rendered="#{empty companyList.resultList}"/>
+
+    <rich:dataTable id="companyList"
+                var="_company"
+              value="#{companyList.resultList}"
+           rendered="#{not empty companyList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Id"/>
+                    <ui:param name="propertyPath" value="company.id"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Address"/>
+                    <ui:param name="propertyPath" value="company.address"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.address}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Contact number"/>
+                    <ui:param name="propertyPath" value="company.contactNumber"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.contactNumber}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Created time"/>
+                    <ui:param name="propertyPath" value="company.createdTime"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.createdTime}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Email id"/>
+                    <ui:param name="propertyPath" value="company.emailId"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.emailId}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Name"/>
+                    <ui:param name="propertyPath" value="company.name"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.name}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Updated time"/>
+                    <ui:param name="propertyPath" value="company.updatedTime"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.updatedTime}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="sort.xhtml">
+                    <ui:param name="entityList" value="#{companyList}"/>
+                    <ui:param name="propertyLabel" value="Website"/>
+                    <ui:param name="propertyPath" value="company.website"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_company.website}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Company' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="companyViewId">
+                <f:param name="companyId"
+                        value="#{_company.id}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/CompanyEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="companyEdit"
+                rendered="#{empty from}">
+                <f:param name="companyId"
+                        value="#{_company.id}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/CompanyList.xhtml"
+            rendered="#{companyList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/CompanyList.xhtml"
+            rendered="#{companyList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{companyList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/CompanyList.xhtml"
+            rendered="#{companyList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{companyList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/CompanyList.xhtml"
+            rendered="#{companyList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{companyList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/CompanyEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create company">
+            <f:param name="companyId"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,203 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="ccaretemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="bookingSearch" styleClass="edit">
+
+       <center><table><tr><td colspan="2">
+         
+         <s:decorate id="companyId" template="edit.xhtml">
+         <ui:define name="label">Select Company</ui:define>
+             <h:selectOneMenu id="companysearchId" style="font-size:8pt; width :170px;"  value="#{bookingAction.companysearchid}" >					
+						<s:selectItems value="#{bookingAction.companyList}" var="com" label="#{com.name}" itemValue="#{com.id}" noSelectionLabel="--Select Company--"/>
+						
+					</h:selectOneMenu>
+			</s:decorate>		
+					
+               <s:decorate id="fromdateId" template="edit.xhtml">
+            <ui:define name="label">From Date</ui:define>
+            <rich:calendar value="#{bookingAction.fromDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+
+           </s:decorate>
+           
+             <s:decorate id="todateId" template="edit.xhtml">
+            <ui:define name="label">To Date</ui:define>
+            <rich:calendar value="#{bookingAction.toDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+
+           </s:decorate>
+
+
+             <s:decorate id="statusField" template="edit.xhtml">
+                <ui:define name="label">Status</ui:define>
+                <h:selectOneMenu value="#{bookingAction.status}">
+           		<f:selectItem itemLabel="All" itemValue="All"/>
+                <f:selectItem itemLabel="BOOKED" itemValue="BOOKED"/>
+                <f:selectItem itemLabel="CANCELLED" itemValue="CANCELLED"/>
+                <f:selectItem itemLabel="PENDING" itemValue="PENDING"/>
+                <f:selectItem itemLabel="CANCEL REQUESTED" itemValue="CANCEL REQUESTED"/>
+                
+                </h:selectOneMenu>
+               </s:decorate>
+            
+                      
+            </td>
+            </tr>
+            <tr>
+            <td colspan="2" align="center">
+            	<span class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="bookingPanel" action="#{bookingAction.search}"/></span>
+			
+     				 <span class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</span></td></tr>
+			
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="bookingPanel">
+        <f:facet name="header">Booking Search Results (#{empty bookingAction.bookingList ? 0 : bookingAction.bookingList.size})</f:facet>
+    <div class="results" id="bookingList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty bookingAction.bookingList}"/>
+
+    <rich:dataTable id="bookingList"
+                var="_booking"
+                rowKeyVar="row"
+                
+              value="#{bookingAction.bookingList}"
+           rendered="#{not empty bookingAction.bookingList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+         <h:column>
+            <f:facet name="header">
+                Booking Ref No.
+            </f:facet>
+            <h:outputText value="#{_booking.bookingRefNo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Full Name
+            </f:facet>
+            <h:outputText value="#{_booking.bookedBy}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Contact No.
+            </f:facet>
+            <h:outputText value="#{_booking.contactNo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Email Id
+            </f:facet>
+            <h:outputText value="#{_booking.emailId}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Booking Date
+            </f:facet>
+            <h:outputText value="#{_booking.bookingDate}">
+            <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Journey Date
+            </f:facet>
+            <h:outputText value="#{_booking.journeyStartDate}">
+            <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Source
+            </f:facet>
+            <h:outputText value="#{_booking.tripSource}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Destination
+            </f:facet>
+            <h:outputText value="#{_booking.tripDestination}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Service Type
+            </f:facet>
+            <h:outputText value="#{_booking.serviceType}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Fare
+            </f:facet>
+            <h:outputText value="Rs. #{_booking.tripFare}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Status
+            </f:facet>
+            <h:outputText value="#{_booking.bookingStatus}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Vehicle
+            </f:facet>
+            <h:outputText value="#{_booking.modelType}"/>
+        </h:column>
+         <h:column>
+            <f:facet name="header">
+               Company
+            </f:facet>
+            <h:outputText value="#{_booking.companyName}"/>
+        </h:column>
+        
+         <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Cancel Booking" actionListener="#{bookingAction.cancelTicket}" action="/ccare/ccarehome.xhtml" onclick="if(!confirm('You are about to cancel booking. Do you want to proceed?')){return false;}" rendered="#{_booking.bookingStatus eq 'CANCEL REQUESTED' or _booking.bookingStatus eq 'PENDING'}">
+                <f:param name="bookingId"
+                        value="#{_booking.id}"/>
+            </a4j:commandLink>#{' '}
+            <a4j:commandLink value="SMS Driver" action="#{bookingAction.smsDriver(_booking)}" reRender="bookingPanel,reportId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"  rendered="#{_booking.bookingStatus eq 'PENDING'}">
+              
+            </a4j:commandLink>
+            
+        </rich:column>
+        
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+   
+ 
+
+</ui:define>
+
+</ui:composition>

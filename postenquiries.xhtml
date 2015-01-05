@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+  
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="enquirey" styleClass="edit" >
+
+        <rich:panel>
+            <f:facet name="header">Post Enquiry</f:facet>
+
+            <s:decorate id="nameField" template="edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name"
+                           size="45"
+                      maxlength="45"
+                     required="true"
+                          value="#{enquireyAction.enquirey.name}" >
+                    <a4j:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="subjectLineField" template="edit.xhtml">
+                <ui:define name="label">Subject line</ui:define>
+                <h:inputText id="subjectLine"
+                           size="70"
+                      maxlength="70"
+                          value="#{enquireyAction.enquirey.subjectLine}">
+                    <a4j:support event="onblur" reRender="subjectLineField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="messageField" template="edit.xhtml">
+                <ui:define name="label">Message</ui:define>
+                <h:inputTextarea id="message"
+                               cols="80"
+                               rows="5"
+                              value="#{enquireyAction.enquirey.message}" required="true">
+                              <a4j:support event="onblur" reRender="messageField" bypassUpdates="true" ajaxSingle="true"/>
+                              </h:inputTextarea>
+            </s:decorate>
+
+
+            <s:decorate id="addressField" template="edit.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputText id="address"
+                           size="100"
+                      maxlength="150"
+                     required="true"
+                          value="#{enquireyAction.enquirey.address}" >
+                    <a4j:support event="onblur" reRender="addressField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact no</ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                     required="true"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{enquireyAction.enquirey.contactNo}" >
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            <s:decorate id="emailIdField" template="edit.xhtml">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="postemailId"
+                           size="55"
+                      maxlength="55"
+                          value="#{enquireyAction.enquirey.emailId}" required="true" validator="#{customValidator.emailOperatorValidator}">
+                    <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+           
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         actionListener="#{enquireyAction.persist}"
+                         action="/userhome.seam"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         
+                        />
+
+           
+
+            <h:commandButton id="cancel"
+                   value="Cancel"  immediate="true" action="/userhome.seam" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+               
+             </h:commandButton>   
+            
+<br/><br/>
+			 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="saveorupdateStatus">
+					        	<f:facet name="start">
+					        		<img src="./img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

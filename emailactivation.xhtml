@@ -1,0 +1,26 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:h="http://java.sun.com/jsf/html"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:f="http://java.sun.com/jsf/core">
+    
+    
+          <m:from name="Caller Cabs" address="transportcabs@gmail.com" />
+        
+          <m:to>#{customerDataAction.customerData.emailId}</m:to>
+        
+          <m:subject>Customer Registration for Caller Cabs</m:subject>
+          <m:body>
+          <p><b>Welcome to caller cabs. Thank you for registering with us.</b>
+          <br/><br/>
+          Please click on the link provided to activate your account. 
+          <a href="#{messages['host.name']}/VerifyAccount.seam?userName=#{customerDataAction.customerData.username}">Activate your account</a>
+           <br/><br/>
+           
+           Your password is: <b>#{customerDataAction.customerData.textPassword}</b>
+           <br/><br/>
+           Thanks &amp; Regards.
+           <br></br><b>Caller Cabs</b></p>
+    </m:body>
+    
+</m:message>

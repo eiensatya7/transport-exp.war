@@ -1,0 +1,288 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="operatortemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="DriverTypeSearch" styleClass="edit">
+
+       <center><table><tr><td>
+         
+                <h:inputText id="DriverTypeName" value="#{driverAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="driverId" action="#{driverAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td>
+			<center>	<h:outputText value="(Search using Driver Name, Email Id, Contact No, License No)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="driverId">
+        <f:facet name="header">Driver Search Results (#{empty driverAction.driverList ? 0 : driverAction.driverList.size})</f:facet>
+    <div class="results" id="driverList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty driverAction.driverList}"/>
+
+    <rich:dataTable id="driverList"
+                var="_driverType"
+                rowKeyVar="row"
+              value="#{driverAction.driverList}"
+           rendered="#{not empty driverAction.driverList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Driver Name
+            </f:facet>
+            <h:outputText value="#{_driverType.name}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Email Id            
+                </f:facet>
+            <h:outputText value="#{_driverType.emailId}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">
+              Contact No
+            </f:facet>
+            <h:outputText value="#{_driverType.contactNo}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        
+        
+        <h:column>
+            <f:facet name="header">
+              License No
+            </f:facet>
+            <h:outputText value="#{_driverType.licenseNumber}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+      
+      <h:column>
+            <f:facet name="header">
+              Status
+            </f:facet>
+            <h:outputText value="#{_driverType.status}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+      
+        
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{driverAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="driverId"
+                        value="#{_driverType.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{driverAction.remove}" reRender="driverId" onclick="if(!confirm('Are you really want to delete?')){return false;}">
+                <f:param name="driverId"
+                        value="#{_driverType.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{driverAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="driver" styleClass="edit" rendered="#{driverAction.formDisplayed eq true}">
+
+        <rich:panel>
+                        
+<f:facet name="header">#{driverAction.driver.id ne null ? 'Edit' : 'Add'} Driver</f:facet>
+
+
+			  <s:decorate id="nameField" template="edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name"
+                           size="65"
+                      maxlength="65"
+                          value="#{driverAction.driver.name}" required="true">
+                    <a4j:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+
+           
+
+
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact no</ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                       onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{driverAction.driver.contactNo}" required="true">
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            
+
+            <s:decorate id="emailIdField" template="edit.xhtml">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="driveremailId"
+                           size="45"
+                      maxlength="45"
+                          value="#{driverAction.driver.emailId}" required="true" validator="#{customValidator.emailOperatorValidator}">
+                    <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="addressField" template="edit.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputTextarea id="address"
+                               cols="80"
+                               rows="2"
+                              value="#{driverAction.driver.address}" required="true">
+                      <a4j:support event="onblur" reRender="addressField" bypassUpdates="true" ajaxSingle="true"/>        
+                              
+                              </h:inputTextarea>
+            </s:decorate>
+           
+
+            <s:decorate id="licenseNumberField" template="edit.xhtml">
+                <ui:define name="label">License Number</ui:define>
+                <h:inputText id="licenseNumber"
+                           size="45"
+                      maxlength="45"
+                          value="#{driverAction.driver.licenseNumber}" required="true">
+                    <a4j:support event="onblur" reRender="licenseNumberField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+             <s:decorate id="startTimeField" template="edit.xhtml" rendered="false">
+                <ui:define name="label">Start time</ui:define>
+                <rich:calendar id="startTime"
+                          value="#{driverAction.driver.startTime}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+			<s:decorate id="endTimeField" template="edit.xhtml" rendered="false">
+                <ui:define name="label">End time</ui:define>
+                <rich:calendar id="endTime"
+                          value="#{driverAction.driver.endTime}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+            <s:decorate id="workingHoursField" template="edit.xhtml">
+                <ui:define name="label">Working hours</ui:define>
+                <h:inputText id="workingHours"
+                          value="#{driverAction.driver.workingHours}">
+                    <a4j:support event="onblur" reRender="workingHoursField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="statusField" template="edit.xhtml">
+                <ui:define name="label">Status</ui:define>
+                <h:selectOneMenu value="#{driverAction.driver.status}">
+           		<f:selectItem itemLabel="ACTIVE" itemValue="ACTIVE"/>
+                <f:selectItem itemLabel="INACTIVE" itemValue="INACTIVE"/>
+                </h:selectOneMenu>
+               </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+            
+            
+            
+                 
+                    </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{driverAction.persist}"
+                         rendered="#{driverAction.driver.id eq null}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,driverId"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{driverAction.update}"
+                       rendered="#{driverAction.driver.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       reRender="createId,driverId"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{driverAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

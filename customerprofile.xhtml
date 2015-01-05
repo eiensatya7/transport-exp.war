@@ -1,0 +1,149 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+   
+ <s:div id="profileId" >
+
+<h:form id="profile" styleClass="edit">
+        <rich:panel>
+         
+            <f:facet name="header">Profile</f:facet>
+
+             <s:decorate id="firstNameField" template="edit.xhtml">
+                <ui:define name="label">First Name</ui:define>
+                <h:inputText id="firstName"
+                           size="65"
+                      maxlength="65"
+                          value="#{customerDataAction.customersDataProfile.firstName}" required="true">
+                    <a4j:support event="onblur" reRender="firstNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+           <s:decorate id="lastNameField" template="edit.xhtml">
+                <ui:define name="label">Last Name</ui:define>
+                <h:inputText id="lastName"
+                           size="65"
+                      maxlength="65"
+                          value="#{customerDataAction.customersDataProfile.lastName}">
+                    <a4j:support event="onblur" reRender="lastNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="addressField" template="edit.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputTextarea id="address"
+                               cols="80"
+                               rows="2"
+                              value="#{customerDataAction.customersDataProfile.address}" required="true">
+                              <a4j:support event="onblur" reRender="addressField" bypassUpdates="true" ajaxSingle="true"/>
+                              </h:inputTextarea>
+            </s:decorate>
+            
+              <s:decorate id="cityField" template="edit.xhtml">
+                <ui:define name="label">City</ui:define>
+                <h:inputText id="city"
+                           size="65"
+                      maxlength="65"
+                          value="#{customerDataAction.customersDataProfile.city}">
+                    <a4j:support event="onblur" reRender="cityField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="stateField" template="edit.xhtml">
+                <ui:define name="label">State</ui:define>
+                   <h:selectOneMenu id="stateId" style="font-size:8pt; width :170px;"  value="#{customerDataAction.customersDataProfile.state}" required="true">					
+						<s:selectItems value="#{customerDataAction.stateList}" var="so" label="#{so}" itemValue="#{so}" noSelectionLabel="--Select State--"/>
+							<a4j:support event="onchange" reRender="stateField"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>
+               
+            </s:decorate>
+            
+
+           
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact no</ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{customerDataAction.customersDataProfile.contactNo}" required="true" >
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+          
+            <s:decorate id="emailIdField" template="edit.xhtml" >
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="emailId"
+                           size="45"
+                      maxlength="45"
+                      disabled="true"
+                          value="#{customerDataAction.customersDataProfile.emailId}" >
+                    <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+         
+            
+             <s:decorate id="userNameField" template="edit.xhtml" >
+                <ui:define name="label">User Name</ui:define>
+                <h:inputText id="userName"
+                           size="20"
+                      maxlength="20"
+                      disabled="true"
+                          value="#{customerDataAction.customersDataProfile.username}">
+                    <a4j:support event="onblur" reRender="userNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+        
+
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+       </rich:panel>
+       
+       <div class="actionButtons">
+
+          
+            <a4j:commandButton id="update"
+                          value="Update"
+                         actionListener="#{customerDataAction.updateProfile}"
+                      action="/customerhome.seam" 
+                       reRender="profileId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="profileId" action="/customerhome.seam" immediate="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+               
+             </a4j:commandButton>   
+            
+
+          
+
+        </div>
+       </h:form>
+    
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

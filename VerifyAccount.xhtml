@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+   
+   <style type="text/css">
+	   #userName
+		{
+		    height:50px;
+		    font-size:14pt;
+		}
+   </style>
+   
+    <rich:panel>
+    <center>
+    <h:form>
+    <h3> Enter password sent to your mail to verify and activate your account.</h3>
+    
+    <br/><br/>
+    
+    <h:inputText id="userName"
+                           size="30"
+                      maxlength="20"
+                          value="#{customerDataAction.textPasswordData}">
+                          </h:inputText>
+                          
+                          <br/><br/>
+                          
+                          <h:commandButton id="save"
+                          value="Activate"
+                         action="#{customerDataAction.confirmAccountInfo}"
+                         />
+                         </h:form>
+    </center>
+      
+    </rich:panel>
+</ui:define>
+
+</ui:composition>

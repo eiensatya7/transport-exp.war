@@ -1,0 +1,195 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="operatortemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="seatingTypeSearch" styleClass="edit">
+
+       <center><table><tr><td>
+         
+                <h:inputText id="seatingTypeName" value="#{seatingTypeAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="seatingId" action="#{seatingTypeAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td>
+			<center>	<h:outputText value="(Search using Seating Type)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="seatingId">
+        <f:facet name="header">Seating Type Search Results (#{empty seatingTypeAction.seatingTypeList ? 0 : seatingTypeAction.seatingTypeList.size})</f:facet>
+    <div class="results" id="seatingTypeList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty seatingTypeAction.seatingTypeList}"/>
+
+    <rich:dataTable id="seatingTypeList"
+                var="_seateType"
+                rowKeyVar="row"
+              value="#{seatingTypeAction.seatingTypeList}"
+           rendered="#{not empty seatingTypeAction.seatingTypeList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Count
+            </f:facet>
+            <h:outputText value="#{_seateType.count}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Description
+            </f:facet>
+            <h:outputText value="#{_seateType.description}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        
+                <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{seatingTypeAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="seatingTypeId"
+                        value="#{_seateType.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{seatingTypeAction.remove}" reRender="seatingId" onclick="if(!confirm('Are you really want to delete?')){return false;}">
+                <f:param name="seatingTypeId"
+                        value="#{_seateType.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{seatingTypeAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="seatingType" styleClass="edit" rendered="#{seatingTypeAction.formDisplayed eq true}">
+
+        <rich:panel>
+            <f:facet name="header">#{seatingTypeAction.seatingType.id ne null ? 'Edit' : 'Add'} Seating Type</f:facet>
+
+
+
+          
+
+            
+            <s:decorate id="seatingTypeField" template="edit.xhtml">
+                <ui:define name="label">Count</ui:define>
+                <h:inputText id="seatingType"
+                           size="45"
+                      maxlength="45"
+                      required="true"
+                          value="#{seatingTypeAction.seatingType.count}">
+                    <a4j:support event="onblur" reRender="seatingTypeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            
+             <s:decorate id="seatingTypeField1" template="edit.xhtml">
+                <ui:define name="label">Description</ui:define>
+                <h:inputText id="seatingType"
+                           size="45"
+                           required="true"
+                      maxlength="45"
+                          value="#{seatingTypeAction.seatingType.description}">
+                    <a4j:support event="onblur" reRender="seatingTypeField1" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+           
+            
+
+
+
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{seatingTypeAction.persist}"
+                         rendered="#{seatingTypeAction.seatingType.id eq null}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,seatingId"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{seatingTypeAction.update}"
+                       rendered="#{seatingTypeAction.seatingType.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       reRender="createId,seatingId"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{seatingTypeAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

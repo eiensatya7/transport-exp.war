@@ -1,0 +1,208 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+
+<style type="style/css">
+h3{
+font-family: Arial;
+font-size: 16px;
+color: #454545;
+
+
+}
+</style>
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="bookingSearch" styleClass="edit">
+
+       <center><table><tr><td colspan="2">
+         
+        
+               <s:decorate id="fromdateId" template="edit.xhtml">
+            <ui:define name="label">Booking Ref No</ui:define>
+            <h:inputText id="name"
+                             size="30"
+                             
+                              value="#{customerDataAction.bookingRefNoToCancel}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+
+           </s:decorate>
+           
+             <s:decorate id="todateId" template="edit.xhtml">
+            <ui:define name="label">Email Id</ui:define>
+            <h:inputText id="name"
+                             size="30"
+                             
+                              value="#{customerDataAction.emailIdToCancel}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+
+           </s:decorate>
+
+
+             
+            
+                      
+            </td>
+            </tr>
+            <tr>
+            <td colspan="2" align="center">
+            	<span class="submit"><a4j:commandButton status="searchStatus" id="search" value="Get Booking Details" reRender="table" action="#{customerDataAction.getBookingInfo}"/></span>
+			
+     				 <span class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</span></td></tr>
+			
+			</table> 
+        </center>  
+
+   </a4j:form>   
+
+  <s:div id="table" >
+
+    <rich:panel id="bookingPanel" rendered="#{not empty customerDataAction.cancelBookingList}">
+        <f:facet name="header">Ticket History (#{empty customerDataAction.cancelBookingList  ? 0 : customerDataAction.cancelBookingList.size})</f:facet>
+    <div class="results" id="bookingList">
+
+    <h:outputText value="Sorry. Booking not available to cancel"
+               rendered="#{empty customerDataAction.cancelBookingList}"/>
+   <a4j:form id="listForm">
+    <rich:dataTable id="bookingList"
+                var="_booking"
+                rowKeyVar="row"
+                
+              value="#{customerDataAction.cancelBookingList}"
+           rendered="#{not empty empty customerDataAction.cancelBookingList}">
+           
+           
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+         <h:column>
+            <f:facet name="header">
+                Booking Ref No.
+            </f:facet>
+            <h:outputText value="#{_booking.bookingRefNo}"/>
+        </h:column>
+      
+        
+        <h:column>
+            <f:facet name="header">
+                Booking Date
+            </f:facet>
+            <h:outputText value="#{_booking.bookingDate}">
+            <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Journey Date
+            </f:facet>
+            <h:outputText value="#{_booking.journeyStartDate}">
+            <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Source
+            </f:facet>
+            <h:outputText value="#{_booking.tripSource}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Destination
+            </f:facet>
+            <h:outputText value="#{_booking.tripDestination}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Service Type
+            </f:facet>
+            <h:outputText value="#{_booking.serviceType}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Fare
+            </f:facet>
+            <h:outputText value="Rs. #{_booking.tripFare}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Status
+            </f:facet>
+            <h:outputText value="#{_booking.bookingStatus}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Vehicle
+            </f:facet>
+            <h:outputText value="#{_booking.modelType}"/>
+        </h:column>
+        
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Cancel Booking" action="#{customerDataAction.cancelTicket}" onclick="Richfaces.showModalPanel('cancelPanel')" rendered="#{_booking.bookingStatus eq 'PENDING'}">
+                <f:param name="bookingId"
+                        value="#{_booking.id}"/>
+            </a4j:commandLink>
+            
+        </rich:column>
+        
+    </rich:dataTable>
+</a4j:form>
+    </div>
+    </rich:panel>
+</s:div>
+    <br/>
+    
+   
+ 
+ <rich:modalPanel zindex="2000" id="cancelPanel" width="550" height="300" style="overflow:scroll;" >
+ <h:commandButton image="img/false.png" onclick="Richfaces.hideModalPanel('cancelPanel')"/>
+ <br/> <br/>
+ <s:div id="msgId">
+ <h:messages globalOnly="true" styleClass="message" id="globalMessagesPanel" errorStyle="color:red" infoStyle="color:green"/>
+ </s:div>
+ 
+ <rich:panel id="assignedrouteId">
+
+        <f:facet name="header">Cancel Ticket</f:facet>
+         <h:form>
+        <center> <h3> Our customer care will process your request after call confirmation</h3></center><br/>
+           <s:decorate id="cancelField" template="edit.xhtml">
+                <ui:define name="label">Cancellation Reason:</ui:define>
+                <h:inputTextarea id="reason"
+                               cols="65"
+                               rows="3"
+                              value="#{customerDataAction.cancelreason}"/>
+            </s:decorate>
+            <br/>
+            <center>
+       <h:commandButton value="Issue Cancel Request" action="/userhome.seam" actionListener="#{customerDataAction.issueCustomerCancellation}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         
+                         />
+      </center>
+      </h:form>
+ </rich:panel>
+ </rich:modalPanel>
+ 
+
+</ui:define>
+
+</ui:composition>

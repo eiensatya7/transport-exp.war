@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="operatortemplate.xhtml">
+
+    <ui:define name="body">
+    
+   <style type="text/css">
+    
+    .dataText{
+font-family: Arial;
+font-size: 20px;
+color: #393939;
+
+}
+    </style>
+     
+        <h1>Welcome Operator!</h1>
+       <h:form>
+        <center>
+		<table  cellspacing="18" border="0" width="900px">
+		
+		<tr>
+		
+		<td align="center">
+		
+		<div class="round">
+		<div id="dashText">
+		Trips <br/>
+		Current Day:<h:commandLink  styleClass="dashlinkText" value="(#{operatorHomeAction.tripsCount})" actionListener="#{bookingAction.searchDashBoard('BOOKED')}" action="/operator/bookingList.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		<div class="round">
+		<div id="dashText">
+		Bookings <br/>
+		B:<h:commandLink styleClass="dashlinkText" value="(#{operatorHomeAction.bookingsCount})" actionListener="#{bookingAction.searchDashBoard('BOOKED')}" action="/operator/bookingList.xhtml"/>&#160;
+		C:<h:commandLink styleClass="dashlinkText" value="(#{operatorHomeAction.cancelledBookingsCount})" actionListener="#{bookingAction.searchDashBoard('CANCELLED')}" action="/operator/bookingList.xhtml"/>&#160;
+		P:<h:commandLink styleClass="dashlinkText" value="(#{operatorHomeAction.pendingBookingsCount})" actionListener="#{bookingAction.searchDashBoard('PENDING')}" action="/operator/bookingList.xhtml"/>&#160;
+		</div>
+		
+		</div>
+		
+	
+		
+		</td>
+		
+		
+		
+		</tr>
+		
+		
+		
+		</table>
+		</center>
+		
+		<br/>
+		<br/>
+		
+		<center><span class="dataText">Total Revenue Generated: &#160;&#160;</span><b>
+           
+           <h:outputText style="font-size:24px;" value="Rs. #{operatorHomeAction.fareCount} /-"/></b></center>
+		</h:form>
+		
+    </ui:define>
+</ui:composition>

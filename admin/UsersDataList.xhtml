@@ -1,0 +1,442 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="admintemplate.xhtml">
+
+<ui:define name="body">
+
+<script>
+function passwordConfirmation(obj)
+{
+	var pass =document.getElementById('usersData:passwordField:password').value;
+	var confirmPass =obj.value;
+
+	if(pass!=confirmPass)
+	{
+		alert('password and confirm password did not match');
+		document.getElementById('usersData:passwordField:password').value="";
+		obj.value="";
+		document.getElementById('usersData:passwordField:password').focus();
+	}
+
+	
+}
+
+
+</script>
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="usersDataSearch" styleClass="edit">
+
+       <center><table> <tr><td colspan="2" align="center">
+       <s:decorate id="statusField" template="edit.xhtml">
+                <ui:define name="label">Select User</ui:define>
+                <h:selectOneMenu value="#{usersDataAction.searchStatus}">
+                <f:selectItem itemLabel="ALL" itemValue="ALL"/>
+           		<f:selectItem itemLabel="OPERATOR" itemValue="OPERATOR"/>
+                <f:selectItem itemLabel="CUSTOMERCARE" itemValue="CUSTOMERCARE"/>
+               
+                </h:selectOneMenu>
+               </s:decorate>
+               </td></tr>
+               
+               
+               <tr><td colspan="2" align="center">
+       <s:decorate id="statusviewField" template="edit.xhtml">
+                <ui:define name="label">Select Status</ui:define>
+                <h:selectOneMenu value="#{usersDataAction.searchStatusData}">
+                <f:selectItem itemLabel="ALL" itemValue="ALL"/>
+           		<f:selectItem itemLabel="ACTIVE" itemValue="ACTIVE"/>
+                <f:selectItem itemLabel="INACTIVE" itemValue="INACTIVE"/>
+               
+                </h:selectOneMenu>
+               </s:decorate>
+               </td></tr>
+       <tr><td>
+         
+                <h:inputText id="usersDataSearchId" value="#{usersDataAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="usersDataPanel" action="#{usersDataAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td colspan="3">
+			<center>	<h:outputText value="(Search using First Name,Last Name,Address,City,State,Contact No,Email Id,Country)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="usersDataPanel">
+        <f:facet name="header">Users Data Search Results (#{empty usersDataAction.usersDataList ? 0 : usersDataAction.usersDataList.size})</f:facet>
+    <div class="results" id="usersDataList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty usersDataAction.usersDataList}"/>
+
+    <rich:dataTable id="usersDataList"
+                var="_usersData"
+                rowKeyVar="row"
+              value="#{usersDataAction.usersDataList}"
+           rendered="#{not empty usersDataAction.usersDataList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               First Name
+            </f:facet>
+            <h:outputText value="#{_usersData.firstName}"/>
+        </h:column>
+        
+         <h:column>
+            <f:facet name="header">
+               Last Name
+            </f:facet>
+            <h:outputText value="#{_usersData.lastName}"/>
+        </h:column>
+         <h:column>
+            <f:facet name="header">
+               Address
+            </f:facet>
+            <h:outputText value="#{_usersData.address}"/>
+        </h:column>
+      
+        <h:column>
+            <f:facet name="header">
+               City
+            </f:facet>
+            <h:outputText value="#{_usersData.city}"/>
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">
+               State
+            </f:facet>
+            <h:outputText value="#{_usersData.state}"/>
+        </h:column>
+        
+         <h:column>
+            <f:facet name="header">
+               Status
+            </f:facet>
+            <h:outputText value="#{_usersData.status}"/>
+        </h:column>
+      
+      <h:column>
+            <f:facet name="header">
+              Contact No
+            </f:facet>
+            <h:outputText value="#{_usersData.contactNo}">
+        
+            </h:outputText>
+        </h:column> 
+        
+        <h:column>
+            <f:facet name="header">
+                Email Id            
+                </f:facet>
+            <h:outputText value="#{_usersData.emailId}">
+                
+            </h:outputText>
+        </h:column>
+        
+       
+        
+         <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{usersDataAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="usersDataId"
+                        value="#{_usersData.id}"/>
+            </a4j:commandLink>
+            #{' '}
+            
+            
+             <a4j:commandLink value="Delete" onclick="if(!confirm('Are you really want to delete?')){return false;}" action="#{usersDataAction.remove}" reRender="usersDataPanel">
+                <f:param name="usersDataId"
+                        value="#{_usersData.id}"/>
+            </a4j:commandLink>
+            
+            
+              #{' '}
+            
+             <a4j:commandLink value="Approve" action="#{usersDataAction.approve}" reRender="usersDataPanel" rendered="#{_usersData.status eq 'INACTIVE'}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="usersDataId"
+                        value="#{_usersData.id}"/>
+            </a4j:commandLink>
+            
+             <a4j:commandLink value="Cancel" action="#{usersDataAction.disApprove}" reRender="usersDataPanel" rendered="#{_usersData.status eq 'ACTIVE'}" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="usersDataId"
+                        value="#{_usersData.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{usersDataAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="usersData" styleClass="edit" rendered="#{usersDataAction.formDisplayed eq true}">
+
+        <rich:panel>
+                        
+<f:facet name="header">#{usersDataAction.usersData.id ne null ? 'Edit' : 'Add'} User Data</f:facet>
+
+               
+              <s:decorate id="typeOfUserField" template="edit.xhtml" >
+                <ui:define name="label">Type Of User</ui:define>
+               <h:selectOneMenu id="userRoleId" required="true" style="font-size:8pt; width :170px;"  value="#{usersDataAction.userRoleId}" >				
+						<s:selectItems value="#{usersDataAction.userRoles}" var="userrole" label="#{userrole.role}" itemValue="#{userrole.id}" noSelectionLabel="--Select Role--"/>
+						<a4j:support event="onchange" reRender="typeOfUserField,ddd"  ajaxSingle="true"/>
+					</h:selectOneMenu>	
+               </s:decorate>
+               <s:span id="ddd">
+               <s:decorate id="companyNameField" template="edit.xhtml" rendered="#{usersDataAction.userRoleId eq '2'}">
+                <ui:define name="label">Company</ui:define>
+               <h:selectOneMenu id="companyId" style="font-size:8pt; width :170px;"  value="#{usersDataAction.companyId}" required="true" >				
+						<s:selectItems value="#{usersDataAction.companyList}" var="company" label="#{company.name}" itemValue="#{company.id}" noSelectionLabel="--Select Company--"/>
+						<a4j:support event="onchange" reRender="ddd"  ajaxSingle="true"/>
+					</h:selectOneMenu>	
+               </s:decorate>
+               </s:span>
+
+
+             <s:decorate id="firstNameField" template="edit.xhtml">
+                <ui:define name="label">First Name</ui:define>
+                <h:inputText id="firstName"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.firstName}" required="true">
+                    <a4j:support event="onblur" reRender="firstNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+           <s:decorate id="lastNameField" template="edit.xhtml">
+                <ui:define name="label">Last Name</ui:define>
+                <h:inputText id="lastName"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.lastName}">
+                    <a4j:support event="onblur" reRender="lastNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="addressField" template="edit.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputTextarea id="address"
+                               cols="80"
+                               rows="2"
+                              value="#{usersDataAction.usersData.address}" required="true">
+                               <a4j:support event="onblur" reRender="addressField" bypassUpdates="true" ajaxSingle="true"/>
+                              </h:inputTextarea>
+            </s:decorate>
+            
+              <s:decorate id="cityField" template="edit.xhtml">
+                <ui:define name="label">City</ui:define>
+                <h:inputText id="city"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.city}">
+                    <a4j:support event="onblur" reRender="cityField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="stateField" template="edit.xhtml">
+                <ui:define name="label">State</ui:define>
+                   <h:selectOneMenu id="stateId" style="font-size:8pt; width :170px;"  value="#{usersDataAction.usersData.state}" required="true">					
+						<s:selectItems value="#{usersDataAction.stateList}" var="so" label="#{so}" itemValue="#{so}" noSelectionLabel="--Select State--"/>
+							<a4j:support event="onchange" reRender="stateField"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>
+                <h:inputText id="state"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.state}" rendered="false">
+                    <a4j:support event="onblur" reRender="stateField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+
+           
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact no</ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{usersDataAction.usersData.contactNo}" required="true" validator="#{customValidator.contactOperatorUserValidator}">
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            <s:decorate id="emailIdFieldedit" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="useremailIdedit"
+                           size="45"
+                      maxlength="45"
+                          value="#{usersDataAction.usersData.emailId}" required="true" validator="#{customValidator.emailUserValidator}">
+                    <a4j:support event="onblur" reRender="emailIdFieldedit" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            <s:decorate id="emailIdField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id ne null}">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="emailId"
+                           size="45"
+                      maxlength="45"
+                      disabled="true"
+                          value="#{usersDataAction.usersData.emailId}" >
+                    <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="userNameFieldedit" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">User Name</ui:define>
+                <h:inputText id="useruserNameedit"
+                           size="20"
+                      maxlength="20"
+                          value="#{usersDataAction.usersData.username}" required="true" validator="#{customValidator.usernameUserValidator}">
+                    <a4j:support event="onblur" reRender="userNameFieldedit" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+             <s:decorate id="userNameField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id ne null}">
+                <ui:define name="label">User Name</ui:define>
+                <h:inputText id="userName"
+                           size="20"
+                      maxlength="20"
+                      disabled="true"
+                          value="#{usersDataAction.usersData.username}">
+                    <a4j:support event="onblur" reRender="userNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+           <s:decorate id="passwordField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Password</ui:define>
+                <h:inputSecret id="password" required="true" redisplay="true"
+                                value="#{usersDataAction.usersData.password}">
+                    <a4j:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
+                    </h:inputSecret>
+            </s:decorate>
+
+
+          <s:decorate id="confirmPasswordField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Confirm Password</ui:define>
+                <h:inputSecret id="confirmpassword" required="true"  onblur="passwordConfirmation(this)">
+                   </h:inputSecret>
+                
+            </s:decorate> 
+            
+            <s:decorate id="approveField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id ne null}">
+                <ui:define name="label">Select Status</ui:define>
+                <h:selectOneMenu value="#{usersDataAction.usersData.status}">
+                
+           		<f:selectItem itemLabel="ACTIVE" itemValue="ACTIVE"/>
+                <f:selectItem itemLabel="INACTIVE" itemValue="INACTIVE"/>
+               
+                </h:selectOneMenu>
+               </s:decorate>
+          
+
+          
+
+           
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+            
+            
+            
+                 
+                    </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{usersDataAction.persist}"
+                         rendered="#{usersDataAction.usersData.id eq null}"
+                         status="sousearchStatus"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,usersDataPanel"/>
+                         
+                         <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{usersDataAction.update}"
+                         rendered="#{usersDataAction.usersData.id ne null}"
+                         status="sousearchStatus"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,usersDataPanel"/>
+
+            
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId"  immediate="true" status="sousearchStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{usersDataAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+<br/><br/>
+
+ <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="sousearchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

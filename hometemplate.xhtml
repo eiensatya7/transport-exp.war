@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:a="http://richfaces.org/a4j"
+   xmlns:rich="http://richfaces.org/rich"
+   xmlns:s="http://jboss.com/products/seam/taglib"
+   contentType="text/html">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Transport</title>
+       <link rel="stylesheet" type="text/css" href="./stylesheet/style.css" />
+      <a:loadStyle src="./stylesheet/theme.xcss"/>
+      <a:loadStyle src="./stylesheet/theme.css"/>
+      <a:loadStyle src="./stylesheet/font-awesome.min.css"/>
+       <script src="js/jquery-1.11.2.min.js" />
+       
+
+      <ui:insert name="head"/>
+      
+      
+      
+   </head>
+   <body>
+     
+      <div class="body">
+          <div class="mainHead">
+        <div class="mainLogo"> <img class="mainLogoImg" src="img/logoCut.jpg" /></div>
+              <div class="mainRight">
+                  <div class="mainRightHead"><span class="fa fa-phone-square" style="color:#f1c40f;font-size:17px;"></span>Book By Phone</div>
+                  <div class="mainRightNumber">(+91) 9090909090</div>
+              </div>
+              </div>
+        
+            
+       <s:div>
+      <ui:include src="customermenu.xhtml" >
+         <ui:param name="projectName" value="transport"/>
+         <!-- <ui:param name="loggedInValue" value="#{identity.loggedIn and (identity.hasRole('CUSTOMER'))}"/>-->
+      </ui:include>
+      </s:div>
+         
+          
+          
+      <center>
+         <h:messages id="messages" globalOnly="true" styleClass="message"
+            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+            rendered="#{showGlobalMessages != 'false'}"/>
+            </center>
+          
+          
+       <rich:panel id="contentId">
+            <ui:insert name="body"/>
+            </rich:panel>
+         
+      </div>
+      <div class="footer">
+        
+      </div>
+      <ui:include src="processing.xhtml" />
+   </body>
+</html>
+</f:view>

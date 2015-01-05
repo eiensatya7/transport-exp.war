@@ -1,0 +1,216 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="admintemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="customerCommentsSearch" styleClass="edit">
+
+       <center><table>
+       <tr>
+       <td >
+       <center>
+       <s:decorate id="statusField" template="edit.xhtml">
+                <ui:define name="label">Status</ui:define>
+                <h:selectOneMenu value="#{customerCommentsAction.status}">
+                    <f:selectItem itemLabel="ALL" itemValue="ALL"/>
+           			<f:selectItem itemLabel="ACTIVE" itemValue="ACTIVE"/>
+	                <f:selectItem itemLabel="INACTIVE" itemValue="INACTIVE"/>
+                </h:selectOneMenu>
+               </s:decorate>
+       
+       </center>
+       </td>
+       </tr>
+       
+       
+       <tr><td>
+         
+                <h:inputText id="customerCommentsName" value="#{customerCommentsAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="customerCommentsId" action="#{customerCommentsAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td>
+			<center>	<h:outputText value="(Search using Comment Text)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="customerCommentsId">
+        <f:facet name="header">Customer Comments Search Results (#{empty customerCommentsAction.customerCommentsList ? 0 : customerCommentsAction.customerCommentsList.size})</f:facet>
+    <div class="results" id="customerCommentsList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty customerCommentsAction.customerCommentsList}"/>
+
+    <rich:dataTable id="customerCommentsList"
+                var="_customerComments"
+                rowKeyVar="row"
+              value="#{customerCommentsAction.customerCommentsList}"
+           rendered="#{not empty customerCommentsAction.customerCommentsList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+
+        <h:column>
+              <f:facet name="header">
+                Comment
+            </f:facet>
+            <h:outputText value="#{_customerComments.comment}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+
+        <h:column>
+              <f:facet name="header">
+                Status
+            </f:facet>
+            <h:outputText value="#{_customerComments.status}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>  
+                
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{customerCommentsAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="customerCommentsId"
+                        value="#{_customerComments.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{customerCommentsAction.remove}" reRender="customerCommentsId" onclick="if(!confirm('Are you really want to delete?')){return false;}">
+                <f:param name="customerCommentsId"
+                        value="#{_customerComments.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{customerCommentsAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="customerComments" styleClass="edit" rendered="#{customerCommentsAction.formDisplayed eq true}">
+
+        <rich:panel>
+            <f:facet name="header">#{customerCommentsAction.customerComments.id ne null ? 'Edit' : 'Add'} Customer Comments</f:facet>
+
+            <s:decorate id="commentField" template="edit.xhtml">
+                <ui:define name="label">Comment</ui:define>
+                <h:inputText id="comment"
+                           size="45"
+                      maxlength="45"
+                          value="#{customerCommentsAction.customerComments.comment}" required="true">
+                    <a4j:support event="onblur" reRender="commentField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+             <s:decorate id="statusField" template="edit.xhtml">
+                <ui:define name="label">Status</ui:define>
+                <h:selectOneMenu value="#{customerCommentsAction.customerComments.status}">
+	           		<f:selectItem itemLabel="ACTIVE" itemValue="ACTIVE"/>
+	                <f:selectItem itemLabel="INACTIVE" itemValue="INACTIVE"/>
+                
+                </h:selectOneMenu>
+               </s:decorate>
+
+           
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{customerCommentsAction.persist}"
+                         rendered="#{customerCommentsAction.customerComments.id eq null}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         reRender="createId,customerCommentsId"
+                         status="saveorupdateStatus"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{customerCommentsAction.update}"
+                       rendered="#{customerCommentsAction.customerComments.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       reRender="createId,customerCommentsId"
+                        status="saveorupdateStatus"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true"  status="saveorupdateStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{customerCommentsAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+<br/><br/>
+			 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="saveorupdateStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

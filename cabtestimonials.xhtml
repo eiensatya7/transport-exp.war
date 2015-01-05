@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+  
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="testimonials" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">Write Testimonial</f:facet>
+
+            <s:decorate id="nameField" template="edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name"
+                           size="45"
+                      maxlength="45"
+                          value="#{testimonialsAction.testimonials.name}" required="true">
+                    <a4j:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact Number</ui:define>
+                <h:inputText id="contactNo"
+                           size="70"
+                      maxlength="70"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{testimonialsAction.testimonials.contactNo}" required="true" >
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="emailIdField" template="edit.xhtml">
+                <ui:define name="label">Email Id</ui:define>
+                <h:inputText id="testimonialemailId"
+                              size="55"
+                      			maxlength="55"
+                              value="#{testimonialsAction.testimonials.emailId}" required="true" validator="#{customValidator.emailOperatorValidator}">
+                              <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                              </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="testimonialContentField" template="edit.xhtml">
+                <ui:define name="label">Testimonial Content</ui:define>
+                <h:inputTextarea id="emailId"
+                               cols="80"
+                               rows="5"
+                          value="#{testimonialsAction.testimonials.testimonialContent}" required="true">
+                          
+                          <a4j:support event="onblur" reRender="testimonialContentField" bypassUpdates="true" ajaxSingle="true"/>
+                          
+                          </h:inputTextarea>
+                
+            </s:decorate>
+           
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         actionListener="#{testimonialsAction.persist}"
+                         action="/userhome.seam"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                        />
+
+          
+            <h:commandButton id="cancel"
+                   value="Cancel" immediate="true" action="/userhome.seam" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+               
+             </h:commandButton>   
+            
+<br/><br/>
+			 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="saveorupdateStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

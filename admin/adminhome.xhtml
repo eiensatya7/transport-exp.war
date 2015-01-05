@@ -1,0 +1,154 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="admintemplate.xhtml">
+
+    <ui:define name="body">
+     <center>
+        <h1>Welcome Administrator!</h1>
+        
+        <h:form>
+		<table  cellspacing="18">
+		
+		<tr>
+		
+		<td>
+		
+		<div class="round">
+		<div id="dashText">
+		Complaints <br/>
+		<s:link styleClass="dashlinkText" value="(#{adminHomeAction.complaintCount})" view="/admin/adminhome.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		SMS Track <br/>
+		<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.smsCount})" actionListener="#{smsHistoryAction.searchDashBoard}" action="/admin/SmsHistory.xhtml">
+		
+		</h:commandLink>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		Email Track <br/>
+		<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.emailCount})" actionListener="#{emailHistoryAction.searchDashBoard}" action="/admin/EmailHistory.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		</tr>
+		
+		
+			<tr>
+		
+		<td>
+		
+		<div class="round">
+		<div id="dashText">
+		Enquiries <br/>
+		<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.enquiryCount})" actionListener="#{enquireyAction.searchDashBoard}" action="/admin/EnquiriesTypeList.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		Bookings <br/>
+		B:<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.bookingsCount})" actionListener="#{bookingAction.searchDashBoard('BOOKED')}" action="/admin/bookingList.xhtml"/>&#160;
+		C:<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.cancelledBookingsCount})" actionListener="#{bookingAction.searchDashBoard('CANCELLED')}" action="/admin/bookingList.xhtml"/>&#160;
+		P:<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.pendingBookingsCount})" actionListener="#{bookingAction.searchDashBoard('PENDING')}" action="/admin/bookingList.xhtml"/>&#160;
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		Cancellations <br/>
+		<s:link styleClass="dashlinkText" value="(#{adminHomeAction.cancelledBookingsCount})" view="/admin/bookingList.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		</tr>
+		
+			<tr>
+		
+		<td>
+		
+		<div class="round">
+		<div id="dashText">
+		Refered Customers <br/>
+		<s:link styleClass="dashlinkText" value="(#{adminHomeAction.referedCustomersCount})" view="/admin/adminhome.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		Transport <br/>
+		<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.transportCount})" actionListener="#{transportAction.searchDashBoard}" action="/admin/TransportList.xhtml" />
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		<td>
+		
+		
+		<div class="round">
+		<div id="dashText">
+		Comments <br/>
+		<h:commandLink styleClass="dashlinkText" value="(#{adminHomeAction.commentsCount})" actionListener="#{customerCommentsAction.searchDashBoard}" action="/admin/CustomerCommentsList.xhtml"/>
+		</div>
+		
+		</div>
+		
+		</td>
+		
+		</tr>
+		
+		
+		</table>
+		</h:form>
+		</center>
+    </ui:define>
+</ui:composition>

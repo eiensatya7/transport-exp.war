@@ -1,0 +1,73 @@
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    
+    
+        
+        
+       
+            
+
+                <rich:toolBarGroup location="left">
+ <s:div rendered="#{identity.loggedIn and (identity.hasRole('CUSTOMER')) }">
+            
+            <s:link  styleClass= "linkText" view="/searchtransport.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" >
+            <span class="fa fa-cab"></span>Book Cab
+            </s:link>
+            
+            <s:link  styleClass= "linkText"  action="/bookinghistory.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"><span class="fa fa-history"></span>Booking History</s:link>
+            
+            
+            <s:link  styleClass= "linkText" view="/Enquiries.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"><span class="fa fa-question-circle"></span>Enquiries</s:link>
+            
+            <s:link styleClass= "linkText" actionListener="#{customerDataAction.showProfile}" action="/customerprofile.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"><span class="fa fa-user"></span>Profile</s:link>
+                                </s:div>
+
+</rich:toolBarGroup>
+
+    <rich:toolBarGroup location="right">
+        <s:div rendered="#{identity.loggedIn and (identity.hasRole('CUSTOMER')) }">
+
+            <s:link view="/customerlogin.xhtml" action="#{identity.logout}" propagation="none" ><span class="fa fa-sign-out"></span>Logout</s:link>
+        </s:div>
+                </rich:toolBarGroup>
+        
+            
+       
+            
+            
+            <rich:toolBarGroup location="left">
+  <s:div rendered="#{!(identity.loggedIn and (identity.hasRole('CUSTOMER')))}">
+            
+     <s:link  styleClass= "linkText" actionListener="#{usersDataAction.initRegisterOperator}" action="/registeroperator.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"><span class="fa fa-user-md"></span>Operator Signup</s:link>
+            
+     <s:link  styleClass= "linkText" actionListener="#{customerDataAction.initCustomer}" action="/registercustomer.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" ><span class="fa fa-user"></span>Customer Signup</s:link>
+            
+            
+     <s:link  styleClass= "linkText" actionListener="#{enquireyAction.initPostEnquiry}" action="/postenquiries.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"><span class="fa fa-question-circle"></span>Post Enquiry</s:link>
+            
+     <s:link  styleClass= "linkText" actionListener="#{customerDataAction.initCancelTicket}" action="/cancelticket.xhtml"  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" ><span class="fa fa-minus-circle"></span>Cancel Ticket</s:link>
+                                </s:div>
+
+</rich:toolBarGroup>
+
+    <rich:toolBarGroup location="right">
+         <s:div rendered="#{!(identity.loggedIn and (identity.hasRole('CUSTOMER')))}">
+
+             
+            <s:link view="/customerlogin.xhtml" propagation="none" ><span class="fa fa-sign-in"></span>Login</s:link>
+        </s:div>
+                </rich:toolBarGroup>
+        
+        
+        
+        
+        
+        
+</rich:toolBar>
+
+ <!-- <h:outputText id="menuWelcomeId" value="#{loggedInValue} signed in as: #{credentials.username}" rendered="#{identity.loggedIn}"/>-->

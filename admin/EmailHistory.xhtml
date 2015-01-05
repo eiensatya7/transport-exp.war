@@ -1,0 +1,122 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="admintemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="emailHistorySearch" styleClass="edit">
+
+       <center><table><tr><td>
+         
+               <s:decorate id="fromdateId" template="edit.xhtml">
+            <ui:define name="label">From Date</ui:define>
+            <rich:calendar value="#{emailHistoryAction.fromemailDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+
+           </s:decorate>
+
+
+		  <s:decorate id="todateId" template="edit.xhtml">
+            <ui:define name="label">To Date</ui:define>
+            <rich:calendar value="#{emailHistoryAction.toemailDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+
+           </s:decorate>
+            
+            
+                      
+            </td></tr>
+            <tr>
+            <td align="center">
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="emailHistoryPanel" action="#{emailHistoryAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="emailHistoryPanel">
+        <f:facet name="header">Email History Search Results (#{empty emailHistoryAction.emailList ? 0 : emailHistoryAction.emailList.size})</f:facet>
+    <div class="results" id="emailList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty emailHistoryAction.emailList}"/>
+
+    <rich:dataTable id="emailList"
+                var="_email"
+                rowKeyVar="row"
+              value="#{emailHistoryAction.emailList}"
+           rendered="#{not empty emailHistoryAction.emailList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Message
+            </f:facet>
+            <h:outputText value="#{_email.message}"/>
+        </h:column>
+        
+         <h:column>
+            <f:facet name="header">
+               Receipient
+            </f:facet>
+            <h:outputText value="#{_email.receipant}"/>
+        </h:column>
+      
+        
+        <h:column>
+            <f:facet name="header">
+                Sent Time            
+                </f:facet>
+            <h:outputText value="#{_email.sentTime}">
+                <f:convertDateTime pattern="MMM dd,yyyy  HH:mm a" timeZone="IST"/>
+            </h:outputText>
+        </h:column>
+      
+      <h:column>
+            <f:facet name="header">
+                Attachment           
+                </f:facet>
+            <h:outputText value="#{_email.hasattachment}">
+      
+            </h:outputText>
+        </h:column>
+      
+        
+       
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+   
+ 
+
+</ui:define>
+
+</ui:composition>

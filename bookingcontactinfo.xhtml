@@ -1,0 +1,893 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+
+<style type="text/css">
+
+.linkTextLogin{
+	line-height:28px;
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size:15px; 
+	font-weight:bold; 
+	color:#228246; 
+	text-decoration: none;
+}
+
+h2{
+font-family: Arial;
+font-size: 20px;
+color: #393939;
+border-bottom: 1px solid #D5D5D5;
+}
+
+h3{
+font-family: Arial;
+font-size: 16px;
+color: #454545;
+padding: 12px 0px 12px 20px;
+
+}
+
+h4{
+font-size: 14px;
+line-height: 22px;
+color: #555;
+font-weight: bold;
+}
+
+.details{
+font-size: 14px;
+line-height: 22px;
+color: #555;
+font-weight: bold;
+}
+.detailsone{
+font-size: 13px;
+line-height: 22px;
+color: #555;
+font-weight: bold;
+}
+
+.css3corner{
+border-radius: 5px 0px 5px 5px;
+-moz-border-radius: 5px 0px 5px 5px;
+-webkit-border-radius: 5px 0px 5px 5px;
+border: 3px solid #8DC3FF;
+width:130px;
+height:40px;
+font-weight:bold;
+
+background-color:#8AC0FF;
+color:#F5FFFA;
+}
+
+
+.even {
+background-color: #ffffed; 
+font-size: 10px;
+height:20px;
+font-family:Arial,Helvetica,sans-serif;
+font-weight:normal;
+}
+.odd {
+background-color: #fffffd; 
+font-size: 10px;
+height:20px;
+font-family:Arial,Helvetica,sans-serif;
+font-weight:normal;
+}
+
+
+</style>
+
+<script type="text/javascript">
+   
+    var curDt = new Date();
+    disableBeforeToday = function(day) {
+        if((curDt.getTime() - day.date.getTime() &lt;= 0) || (day.date.getDate() == curDt.getDate()))
+            return true;
+        else
+            return false;
+        
+    }
+
+   
+    
+</script>
+
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+  
+ 
+ <s:div id="loginorguest">
+ <s:div id="createId" rendered="#{identity.loggedIn and (identity.hasRole('CUSTOMER')) }">
+ 
+ <table>
+ <tr>
+ <td style="width:700px;" valign="top">
+ <rich:panel>
+            
+           <h2> Customer Travel Details</h2>
+            
+          <h3>Transport Selection Details</h3>
+          
+          <h:form id="booking" styleClass="edit" >
+          
+           <table style="padding: 0px 0px 12px 32px;">
+		   	<tr>
+		   	<td style="padding-right:50px;">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Pickup Date and Time </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="datetimediv">
+		   	<rich:calendar value="#{bookingAction.finalDate}" isDayEnabled ="disableBeforeToday" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	<tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
+		   	<tr>
+		   	<td colspan="2">
+		   	<h:selectBooleanCheckbox value="#{bookingAction.copyRegisteredAddress}" >
+		   		<a4j:support event="onclick" action="#{bookingAction.setFullAddress}" reRender="addressdiv"  ajaxSingle="true" />
+		   	</h:selectBooleanCheckbox>&#160;
+		   	<h:outputText styleClass="detailsone" value="Pickup point address is same as registered address"/>
+		   	
+		   	</td>
+		   	</tr>
+		   	<tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
+		   	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Full Address for Communication </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="addressdiv">
+		   	<h:inputTextarea id="address"
+                               cols="36"
+                               rows="6"
+                               
+                               style="font-weight:600;font-size:12px;"
+                              value="#{bookingAction.fullAddress}" required="true"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	  	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Remarks (If any) </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="remarksdiv">
+		   	<h:inputTextarea id="remarks"
+                               cols="36"
+                               rows="6"
+                               style="font-weight:600;font-size:12px;"
+                              value="#{bookingAction.remarks}" required="true"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		  
+          
+          <h3>Customer Contact Details</h3> 
+           
+           <table style="padding: 0px 0px 12px 32px;">
+		   	<tr>
+		   	<td style="padding-right:50px;">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Name in Full </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="namediv">
+		    <h:inputText id="name"
+                             size="30"
+                             
+                              value="#{bookingAction.fullName}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+                              
+                               
+                              
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Mobile No for Communication </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="mobilediv">
+		   	<h:inputText id="mobile"
+                               size="30"
+                              value="#{loggedInCustomer.contactNo}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	  	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Email Id </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="emaildiv">
+		   	<h:inputText id="email"
+                               size="30"
+                               value="#{loggedInCustomer.emailId}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		   	
+		   	<br/>
+		   	
+		   	
+		   	
+		   	<center>
+		   	
+		   	<h:commandButton id="confirm"
+                           styleClass="css3corner"
+                          value="Confirm Booking"
+                         action="#{bookingAction.confirmBooking}"
+                         onclick="if(!confirm('Do you want to confirm booking?')){return false;}"
+                         
+                         /> </center>
+                         </h:form>
+                   <br/>
+                 
+                         <br/><br/>	
+		   	
+		   	
+         </rich:panel> 
+ 
+ </td>
+ <td style="width:320px;" valign="top">
+ <rich:panel>
+            
+           <h2> Booking Details</h2>
+            <center>
+                  
+           		
+           		<s:graphicImage value="#{bookingAction.selectedTransport.image}"   rendered="#{not empty bookingAction.selectedTransport.image}"/>
+		        
+					<s:div id="image1" rendered="#{empty bookingAction.selectedTransport.image}" >
+									
+						<img src="img/false.png" height="100" width="100"  />
+									
+			         </s:div>
+           
+           </center>
+           <br/>
+           <table>
+           <tr>
+           <td>
+           <span class="details">Model:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.model}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Color:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.colour}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Fuel Type:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.fuelType}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Comfort:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.comfortType}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Year:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.modelYear}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Journey Type:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.journeyTypeName}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Seating Capacity:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.count}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Service:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.serviceType}"/></b>
+           </td>
+           </tr>
+           <s:div rendered="#{bookingAction.serviceType eq 'Point to Point'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceptop}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">To:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.destptop}"/></b>
+           </td>
+           </tr>
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateptop}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           </s:div>
+           <s:div rendered="#{bookingAction.serviceType eq 'Airport'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceair}"/></b>
+           </td>
+           </tr>
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateair}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Booking Mode:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="One way" rendered="#{bookingAction.airportTwoway eq false}"/>
+            <h:outputText style="font-size:13px;" value="Two way" rendered="#{bookingAction.airportTwoway eq true}"/>
+          </b>
+           </td>
+           </tr>
+           
+           </s:div>
+           
+             <s:div rendered="#{bookingAction.serviceType eq 'Packaged'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourcepack}"/></b>
+           </td>
+           </tr>
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDatepack}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">No. of Hours:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="#{bookingAction.durationpack} hrs"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Price:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="Rs. #{bookingAction.selectedTransport.farePerKm} / hr"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+           
+           
+           
+            
+           </s:div>
+           
+            <s:div rendered="#{bookingAction.serviceType eq 'Outstation'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceout}"/></b>
+           </td>
+           </tr>
+           
+           <tr>
+           <td>
+           <span class="details">To:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.destout}"/></b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Approx Kms:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.locationDistanceOut*2} Km"/></b>
+           </td>
+           </tr>
+           
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateout}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Duration:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="#{bookingAction.durationout} days"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Price:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="Rs. #{bookingAction.selectedTransport.farePerKm} / Km"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+           
+           
+           
+            
+           </s:div>
+           
+            <tr>
+           <td>
+           <h2>Total Price:</h2><b>
+           <center>
+           <h:outputText style="font-size:24px;" value="Rs. #{bookingAction.selectedTransport.fare} /-"/></center></b>
+           </td>
+           </tr>
+           
+           </table>
+		   	
+         </rich:panel> 
+ </td>
+ </tr>
+ 
+ </table>
+
+ </s:div>
+ 
+ 
+ 
+ 
+ 
+  <s:div id="createguestId" rendered="#{bookingAction.guestSelected eq true}">
+ 
+ <table>
+ <tr>
+ <td style="width:700px;" valign="top">
+ <rich:panel>
+            
+           <h2> Customer Travel Details</h2>
+            
+          <h3>Transport Selection Details</h3>
+          
+          <h:form id="bookingguest" styleClass="edit" >
+          
+           <table style="padding: 0px 0px 12px 32px;">
+		   	<tr>
+		   	<td style="padding-right:50px;">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Pickup Date and Time </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="datetimeguestdiv">
+		   	<rich:calendar value="#{bookingAction.finalDate}" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="datetimeguestdiv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Full Address for Communication </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="addressguestdiv">
+		   	<h:inputTextarea id="addressguest"
+                               cols="36"
+                               rows="6"
+                               
+                               style="font-weight:600;font-size:12px;"
+                              value="#{bookingAction.fullAddress}" required="true"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	  	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Remarks (If any) </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="remarksguestdiv">
+		   	<h:inputTextarea id="remarksguest"
+                               cols="36"
+                               rows="6"
+                               style="font-weight:600;font-size:12px;"
+                              value="#{bookingAction.remarks}" required="true"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		  
+          
+          <h3>Customer Contact Details</h3> 
+           
+           <table style="padding: 0px 0px 12px 32px;">
+		   	<tr>
+		   	<td style="padding-right:50px;">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Name in Full </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="nameguestdiv">
+		    <h:inputText id="nameguest"
+                             size="30"
+                             
+                              value="#{bookingAction.fullName}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+                              
+                               
+                              
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Mobile No for Communication </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="mobileguestdiv">
+		   	<h:inputText id="mobileguest"
+                               size="30"
+                              value="#{bookingAction.booking.customerContact}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   	  	<tr>
+		   	<td style="padding-right:50px;" valign="top">
+		   	<b style="font-weight:600;font-size:12px;"> <h4> Email Id </h4> </b>
+		   	</td>
+		   	
+		   	<td>
+		   	<s:div id="emailguestdiv">
+		   	<h:inputText id="emailguest"
+                               size="30"
+                               value="#{bookingAction.booking.customerEmailId}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	
+		   
+		   	</table>
+		   	
+		   	<br/>
+		   	
+		   	
+		   	
+		   	<center>
+		   	
+		   	<h:commandButton id="confirmguest"
+                           styleClass="css3corner"
+                          value="Confirm Booking"
+                         action="#{bookingAction.confirmBooking}"
+                         onclick="if(!confirm('Do you want to confirm booking?')){return false;}"
+                         
+                         /> </center>
+                         </h:form>
+                   <br/>
+                 
+                         <br/><br/>	
+		   	
+		   	
+         </rich:panel> 
+ 
+ </td>
+ <td style="width:320px;" valign="top">
+ <rich:panel>
+            
+           <h2> Booking Details</h2>
+            <center>
+                  
+           		
+           		<s:graphicImage value="#{bookingAction.selectedTransport.image}"   rendered="#{not empty bookingAction.selectedTransport.image}"/>
+		        
+					<s:div id="imageguest1" rendered="#{empty bookingAction.selectedTransport.image}" >
+									
+						<img src="img/false.png" height="100" width="100"  />
+									
+			         </s:div>
+           
+           </center>
+           <br/>
+           <table>
+           <tr>
+           <td>
+           <span class="details">Model:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.model}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Color:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.colour}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Fuel Type:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.fuelType}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Comfort:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.comfortType}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Year:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.modelYear}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Journey Type:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.journeyTypeName}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Seating Capacity:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.selectedTransport.count}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">Service:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.serviceType}"/></b>
+           </td>
+           </tr>
+           <s:div rendered="#{bookingAction.serviceType eq 'Point to Point'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceptop}"/></b>
+           </td>
+           </tr>
+           <tr>
+           <td>
+           <span class="details">To:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.destptop}"/></b>
+           </td>
+           </tr>
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateptop}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           </s:div>
+           <s:div rendered="#{bookingAction.serviceType eq 'Airport'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceair}"/></b>
+           </td>
+           </tr>
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateair}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Booking Mode:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="One way" rendered="#{bookingAction.airportTwoway eq false}"/>
+            <h:outputText style="font-size:13px;" value="Two way" rendered="#{bookingAction.airportTwoway eq true}"/>
+          </b>
+           </td>
+           </tr>
+           
+           </s:div>
+           
+             <s:div rendered="#{bookingAction.serviceType eq 'Packaged'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourcepack}"/></b>
+           </td>
+           </tr>
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDatepack}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">No. of Hours:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="#{bookingAction.durationpack} hrs"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Price:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="Rs. #{bookingAction.selectedTransport.farePerKm} / hr"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+           
+           
+           
+            
+           </s:div>
+           
+            <s:div rendered="#{bookingAction.serviceType eq 'Outstation'}">    
+           <tr>
+           <td>
+           <span class="details">From:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.sourceout}"/></b>
+           </td>
+           </tr>
+           
+           <tr>
+           <td>
+           <span class="details">To:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.destout}"/></b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Approx Kms:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.locationDistanceOut*2} Km"/></b>
+           </td>
+           </tr>
+           
+          
+            <tr>
+           <td>
+           <span class="details">Pickup Date and Time:</span>&#160;<b><h:outputText style="font-size:13px;" value="#{bookingAction.travelDateout}">
+           <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+           </h:outputText>
+           </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Duration:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="#{bookingAction.durationout} days"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+            <tr>
+           <td>
+           <span class="details">Price:</span>&#160;<b>
+           <h:outputText style="font-size:13px;" value="Rs. #{bookingAction.selectedTransport.farePerKm} / Km"/>
+           
+          </b>
+           </td>
+           </tr>
+           
+           
+           
+           
+            
+           </s:div>
+           
+            <tr>
+           <td>
+           <h2>Total Price:</h2><b>
+           <center>
+           <h:outputText style="font-size:24px;" value="Rs. #{bookingAction.selectedTransport.fare} /-"/></center></b>
+           </td>
+           </tr>
+           
+           </table>
+		   	
+         </rich:panel> 
+ </td>
+ </tr>
+ 
+ </table>
+
+ </s:div>
+ </s:div>
+ <br/><br/>
+ 
+ 
+ <rich:modalPanel zindex="2000" id="loginPanel" width="750" height="400" style="overflow:scroll;" >
+ <a4j:commandButton image="img/false.png" onclick="Richfaces.hideModalPanel('loginPanel')"/>
+ <s:div id="alertId">
+ <h:messages globalOnly="true" styleClass="message" id="globalMessagesPanel" errorStyle="color:red" infoStyle="color:green"/>
+ </s:div>
+ <br/>
+ 
+ 
+       
+ </rich:modalPanel>
+ 
+ 
+ <s:div id="loginData">
+ <s:div id="temp" rendered="#{bookingAction.guestSelected eq false}">
+ <s:div id="tempPanel" rendered="#{!(identity.loggedIn and (identity.hasRole('CUSTOMER')))}">
+   <rich:panel >
+            
+			<center>
+            <p>Customer Login  #{bookingAction.guestSelected} </p>
+			<h:form>
+			
+            <div class="dialog">
+                <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
+                    <h:outputLabel for="username">Username</h:outputLabel>
+                    <h:inputText id="username"
+                              value="#{credentials.username}"/>
+                    <h:outputLabel for="password">Password</h:outputLabel>
+                    <h:inputSecret id="password"
+                                value="#{credentials.password}"/>
+                    <h:outputLabel for="rememberMe">Remember me</h:outputLabel>
+                    <h:selectBooleanCheckbox id="rememberMe"
+                                          value="#{rememberMe.enabled}"/>
+                </h:panelGrid>
+            </div>
+            
+             <div class="actionButtons">
+            	<h:commandButton id="submit" value="Login" action="#{identity.login}"/>
+        	</div>
+            </h:form>
+            </center>
+
+           <br/>
+           <br/>
+          <h:form>
+           <center>
+           <h:commandLink styleClass="linkTextLogin" value="Dont have an account. Proceed as Guest" action="#{bookingAction.allowGuest}" />
+           </center>
+			</h:form>
+			
+        </rich:panel>
+ </s:div>
+ </s:div>
+</s:div> 
+
+<br/>
+
+ 
+</ui:define>
+
+</ui:composition>

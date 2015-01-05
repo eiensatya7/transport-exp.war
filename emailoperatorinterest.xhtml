@@ -1,0 +1,27 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:h="http://java.sun.com/jsf/html"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:f="http://java.sun.com/jsf/core">
+    
+    
+          <m:from name="Caller Cabs" address="transportcabs@gmail.com" />
+        
+          <m:to>#{usersDataAction.usersData.emailId}</m:to>
+        
+          <m:subject>Operator Registration for Caller Cabs</m:subject>
+          <m:body>
+          <p><b>Welcome to caller cabs. Thank you for registering as an operator with us.</b>
+          <br/><br/>
+          We will verify your company and account details and get back to you soon.
+          <br/><br/>
+          Once approved you can login by clicking on the link provided . 
+           <a href="#{messages['host.name']}/operatorlogin.seam">Login</a>
+          
+          
+           <br/><br/>
+           Thanks &amp; Regards.
+           <br></br><b>Caller Cabs</b></p>
+    </m:body>
+    
+</m:message>

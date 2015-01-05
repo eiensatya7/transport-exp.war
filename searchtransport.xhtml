@@ -1,0 +1,1448 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+
+<style type="text/css">
+
+
+.css3corner{
+border-radius: 5px 0px 5px 5px;
+-moz-border-radius: 5px 0px 5px 5px;
+-webkit-border-radius: 5px 0px 5px 5px;
+border: 3px solid #8DC3FF;
+
+font-weight:bold;
+
+background-color:#8AC0FF;
+width:90px;
+height:30px;
+
+color:#F5FFFA;
+}
+
+.css3cornerone{
+border-radius: 5px 0px 5px 5px;
+-moz-border-radius: 5px 0px 5px 5px;
+-webkit-border-radius: 5px 0px 5px 5px;
+border: 3px solid #8DC3FF;
+
+font-weight:bold;
+
+background-color:#8AC0FF;
+width:140px;
+height:30px;
+
+color:#F5FFFA;
+}
+
+
+.even {
+background-color: #ffffed; 
+font-size: 10px;
+height:20px;
+font-family:Arial,Helvetica,sans-serif;
+font-weight:normal;
+}
+.odd {
+background-color: #fffffd; 
+font-size: 10px;
+height:20px;
+font-family:Arial,Helvetica,sans-serif;
+font-weight:normal;
+}
+
+h2{
+font-family: Arial;
+font-size: 20px;
+color: #393939;
+border-bottom: 1px solid #D5D5D5;
+}
+
+h3{
+font-family: Arial;
+font-size: 16px;
+color: #454545;
+
+
+}
+
+h4{
+font-size: 15px;
+line-height: 4px;
+color: #555;
+font-weight: bold;
+}
+
+
+
+
+</style>
+
+
+<script type="text/javascript">
+   
+    var curDt = new Date();
+    disableBeforeToday = function(day) {
+        if((curDt.getTime() - day.date.getTime() &lt;= 0) || (day.date.getDate() == curDt.getDate()))
+            return true;
+        else
+            return false;
+        
+    }
+
+   
+    
+</script>
+
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+  
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="booking" styleClass="edit" >
+
+ 
+
+        <rich:panel style="height:800px;">
+            <h2>Book Cabs Online</h2>
+           
+            <table width="100%">
+            
+            <tr>
+            
+            <td width="20%" style="padding-right:30px;">
+            <table >
+            <tr >
+               <td style="padding-bottom:10px;">
+               <center><span style="font-family: tahoma; font-size: 15px; color: #4e5849"><h3>Filter your search</h3></span></center><br/>
+		             <rich:simpleTogglePanel switchType="client" label="Select Model">
+		       			<table>
+            				<ui:repeat var="model" value="#{bookingAction.modelList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{model.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{model.model}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Seating">
+		       			<table>
+            				<ui:repeat var="seating" value="#{bookingAction.seatingTypeList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{seating.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{seating.count}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Journey Type">
+		       			<table>
+            				<ui:repeat var="journey" value="#{bookingAction.journeyTypeList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{journey.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{journey.journeyType}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Air Conditioning">
+		       			<table>
+            				
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.ac}"/>
+                       						<h:outputText value="A/C"/>
+                  						 </td>
+                					</tr>
+                					
+                					<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.nonac}"/>
+                       						<h:outputText value="Non A/C"/>
+                  						 </td>
+                					</tr>
+							
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Fuel">
+		       			<table>
+            				
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.petrol}"/>
+                       						<h:outputText value="Petrol"/>
+                  						 </td>
+                					</tr>
+                					
+                					<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.diesel}"/>
+                       						<h:outputText value="Diesel"/>
+                  						 </td>
+                					</tr>
+                					
+                					
+							
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            
+            
+            </table>
+           
+            
+            </td>
+            
+            
+            
+            <td valign="top">
+            <center><span style="font-family: tahoma; font-size: 15px; color: #4e5849"><h3>Select your booking</h3></span></center><br/>
+            <rich:panel>
+              <table cellpadding="7" style="padding: 0px 0px 12px 120px;">
+            
+            <tr>
+            
+          
+             <td >
+            <h4> 
+            <h:selectOneRadio value="#{bookingAction.serviceType}" style="width:490px;font-size:17px;">
+		            	<f:selectItem itemValue="Point to Point" itemLabel="Point To Point" />
+		            	<f:selectItem itemValue="Airport" itemLabel="AirPort" />
+			   			<f:selectItem itemValue="Packaged" itemLabel="Package" />
+			   			<f:selectItem itemValue="Outstation" itemLabel="Out Station"/>
+			   			<a4j:support event="onchange" reRender="subPanel,responseId"  ajaxSingle="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+		   			</h:selectOneRadio>
+		 </h4>
+            </td>
+            
+            </tr>
+            
+            </table>
+          
+           
+		   	
+		  
+		   	<a4j:outputPanel id="subPanel">
+		   	
+		    <s:div rendered="#{bookingAction.serviceType eq 'Point to Point'}">	
+		    <table style="padding: 0px 0px 12px 120px;">
+		    <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4> Source Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="sourceiddiv">
+		   	
+		   	<h:selectOneMenu id="sourceptopId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.sourceptop}" >					
+						<s:selectItems value="#{bookingAction.ptopsourceLocationList}" var="ptop" label="#{ptop}" itemValue="#{ptop}" noSelectionLabel="--Select Source Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+		   	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td>
+		    
+		    <table>
+		   	<tr>
+		   	<td>
+		   	<h4>  Destination Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="destiddiv">
+		   	<h:selectOneMenu id="destptopId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.destptop}" >					
+						<s:selectItems value="#{bookingAction.ptopdestLocationList}" var="ptop" label="#{ptop}" itemValue="#{ptop}" noSelectionLabel="--Select Destination Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    
+		    </td>
+		    
+		    </tr>
+		    
+		    
+		   <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4> Pickup Date and Time </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="datetimediv">
+		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday"  inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td valign="bottom">
+		    
+		    <table>
+		   	<tr>
+		   	<td>
+		   	<b style="font-weight:600;font-size:12px;"> </b>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td >
+		   	<s:div id="submitdiv">
+		   	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		   	<a4j:commandButton styleClass="css3cornerone" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="search" value="Search Cabs"  action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		    
+		    </table>
+		    </td>
+		    </tr>
+		    </table>
+		    
+		   	
+		   	</s:div>
+		   	
+		   	
+		   	<s:div rendered="#{bookingAction.serviceType eq 'Airport'}">	
+		    <table style="padding: 0px 0px 12px 120px;">
+		    <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4> Source Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="airsourceiddiv">
+		   	
+		   	
+		   	<h:selectOneMenu id="sourceairId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.sourceair}" >					
+						<s:selectItems value="#{bookingAction.airsourceLocationList}" var="air" label="#{air}" itemValue="#{air}" noSelectionLabel="--Select Source Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+		   
+             
+		   	 
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td>
+		     <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Pickup Date and Time </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="airdatetimediv">
+		   	<rich:calendar value="#{bookingAction.travelDateair}" isDayEnabled ="disableBeforeToday" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="airdatetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		   
+		    </td>
+		    
+		    </tr>
+		    
+		    
+		   <tr>
+		    <td colspan="2" align="center" style="padding-top: 14px;">
+		    <h4>   <h:selectBooleanCheckbox value="#{bookingAction.airportTwoway}" ajaxSingle="true"/>  Looking for Drop Off and Drop In. Parking charges applicable </h4>
+		    </td>
+		    
+		   
+		    
+		    </tr>
+		    
+		    <tr>
+		    <td colspan="2" align="center" style="padding-top: 7px;">
+		     <table valign="bottom">
+		   	<tr>
+		   	<td>
+		   	<b style="font-weight:600;font-size:12px;"> </b>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td >
+		   	<s:div id="airsubmitdiv">
+		   	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		   	<a4j:commandButton styleClass="css3cornerone" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="airsearch" value="Search Cabs"  action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		    
+		    </table>
+		    
+		    </td>		    
+		    </tr>
+		    </table>
+		    
+		   	
+		   	</s:div>
+		   	
+		   	
+		   	
+		   	<s:div rendered="#{bookingAction.serviceType eq 'Packaged'}">	
+		    <table style="padding: 0px 0px 12px 120px;">
+		    <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Source Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	   	
+		   	<s:div id="packsourceiddiv">
+		   	
+		   	
+		   	<h:selectOneMenu id="sourcepackId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.sourcepack}" >					
+						<s:selectItems value="#{bookingAction.packsourceLocationList}" var="pack" label="#{pack}" itemValue="#{pack}" noSelectionLabel="--Select Source Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+		   
+             
+		   	 
+             </s:div>
+             
+		   	 
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td>
+		     <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Pickup Date and Time </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="packdatetimediv">
+		   	<rich:calendar value="#{bookingAction.travelDatepack}" isDayEnabled ="disableBeforeToday" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="packdatetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		   
+		    </td>
+		    
+		    </tr>
+		    
+		    
+		   <tr>
+		    <td style="padding-right:50px;">
+		    
+		     <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Duration of the package </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="packdurationdiv">
+		    <h:selectOneMenu value="#{bookingAction.durationpack}" required="true" style="width:200px;height:20px;font-size:14px;">
+	           		
+	                <f:selectItem itemLabel="1 Hour" itemValue="1"/>
+	                 <f:selectItem itemLabel="2 Hour" itemValue="2"/>
+	                  <f:selectItem itemLabel="3 Hour" itemValue="3"/>
+	                   <f:selectItem itemLabel="4 Hour (Half Day)" itemValue="4"/>
+	                    <f:selectItem itemLabel="5 Hour" itemValue="5"/>
+	                     <f:selectItem itemLabel="6 Hour" itemValue="6"/>
+	                      <f:selectItem itemLabel="7 Hour" itemValue="7"/>
+	                       <f:selectItem itemLabel="8 Hour (Full Day)" itemValue="8"/>
+	                       
+	                <a4j:support event="onblur" reRender="packdurationdiv" bypassUpdates="true" ajaxSingle="true"/>
+            </h:selectOneMenu>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		       
+		    </td>
+		    
+		   <td valign="bottom">
+		   
+		   <table >
+		   	<tr>
+		   	<td>
+		   	<b style="font-weight:600;font-size:12px;"> </b>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td >
+		   	<s:div id="packsubmitdiv">
+		   	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		   	<a4j:commandButton styleClass="css3cornerone" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="packsearch" value="Search Cabs"  action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		    
+		    </table>
+		    
+		   </td>
+		    
+		    </tr>
+		    
+		    
+		    </table>
+		    
+		   	
+		   	</s:div>
+		   	
+		   	
+		   	
+		   	
+		   	<s:div rendered="#{bookingAction.serviceType eq 'Outstation'}">	
+		    <table style="padding: 0px 0px 12px 120px;">
+		    <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4> Source Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="outsourceiddiv">
+		   
+		   	<h:selectOneMenu id="sourceoutId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.sourceout}" >					
+						<s:selectItems value="#{bookingAction.outsourceLocationList}" var="out" label="#{out}" itemValue="#{out}" noSelectionLabel="--Select Source Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+		   	
+		 
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td>
+		    
+		    <table>
+		   	<tr>
+		   	<td>
+		   	<h4> Destination Locality</h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="outdestiddiv">
+		   	 	<h:selectOneMenu id="destoutId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.destout}" >					
+						<s:selectItems value="#{bookingAction.outdestLocationList}" var="out" label="#{out}" itemValue="#{out}" noSelectionLabel="--Select Destination Locality--"/>
+							
+				
+					</h:selectOneMenu>	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    
+		    </td>
+		    
+		    </tr>
+		    
+		    
+		   <tr>
+		    <td style="padding-right:50px;">
+		    <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Pickup Date and Time </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="outdatetimediv">
+		   	<rich:calendar value="#{bookingAction.travelDateout}" isDayEnabled ="disableBeforeToday" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="outdatetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+		    
+		   
+		    <td>
+		    
+		     <table >
+		   	<tr>
+		   	<td>
+		   	<h4>  Duration (No. of Days) </h4>
+		   	</td>
+		   	</tr>
+		   	<tr>
+		   	<td>
+		   	<s:div id="outdurationdiv">
+		    <h:selectOneMenu value="#{bookingAction.durationout}" required="true" style="width:200px;height:20px;font-size:14px;">
+	           		
+	                <f:selectItem itemLabel="1" itemValue="1"/>
+	                 <f:selectItem itemLabel="2" itemValue="2"/>
+	                  <f:selectItem itemLabel="3" itemValue="3"/>
+	                   <f:selectItem itemLabel="4" itemValue="4"/>
+	                    <f:selectItem itemLabel="5" itemValue="5"/>
+	                     <f:selectItem itemLabel="6" itemValue="6"/>
+	                      <f:selectItem itemLabel="7" itemValue="7"/>
+	                       <f:selectItem itemLabel="8" itemValue="8"/>
+	                        <f:selectItem itemLabel="9" itemValue="9"/>
+	                         <f:selectItem itemLabel="10" itemValue="10"/>
+	                <a4j:support event="onblur" reRender="outdurationdiv" bypassUpdates="true" ajaxSingle="true"/>
+            </h:selectOneMenu>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		   	
+		   
+		    </td>
+		    </tr>
+		    
+		    <tr>
+		    <td colspan="2" align="center">
+		     <table>
+		   	<tr>
+		   	<td>
+		   	<b style="font-weight:600;font-size:12px;margin-top:7px;"> </b>
+		   	</td>
+		   	</tr>
+		   		<tr>
+		   	<td>
+		   	<b style="font-weight:600;font-size:12px;margin-top:7px;"> </b>
+		   	</td>
+		   	</tr>
+		   	
+		   	<tr>
+		   	
+		   	<td >
+		   	<s:div id="outsubmitdiv">
+		   	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		   	<a4j:commandButton styleClass="css3cornerone" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="outsearch" value="Search Cabs"  action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		    
+		    </table>
+		    
+		    </td>		    
+		    </tr>
+		    </table>
+		    
+		   	
+		   	</s:div>
+		   	</a4j:outputPanel>
+		   	<br/>
+		   	<s:div id="responseId">
+ 			
+ 			<rich:panel id="panelId" rendered="#{bookingAction.searchFinished eq true}">
+ 
+
+       
+     
+     
+       
+       <s:div rendered="#{bookingAction.serviceType eq 'Point to Point' and bookingAction.sourceptop ne null and bookingAction.destptop ne null and bookingAction.travelDateptop ne null and not empty bookingAction.transportList}">	
+      
+        <center>
+       <table border="0" >
+       <tr>
+       <td colspan="3" style="padding-bottom:20px;">
+      <b> Service Type selected : Point to Point. You searched for </b>
+       </td>
+       </tr>
+       <tr>
+       <td style="padding-right:40px;">
+       <b>From</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Destination</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Pickup Date and Time</b>
+       </td>
+       </tr>
+       
+       <tr>
+       <td style="padding-right:40px;">
+       <h:outputText value="#{bookingAction.sourceptop}"/>
+       </td>
+       
+        <td style="padding-right:40px;">
+       <h:outputText value="#{bookingAction.destptop}"/>
+       </td>
+       
+          <td style="padding-right:40px;">
+       <h:outputText value="#{bookingAction.travelDateptop}">
+       	<s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+       </h:outputText>
+       </td>
+       
+       
+       </tr>
+       
+       </table>
+       </center>
+       <br/><br/>
+       <center><b><h:outputText value="No Vehicles available for the selected criteria" rendered="#{empty bookingAction.transportList}"></h:outputText></b></center>
+        <rich:dataTable id="ptopsearchList"
+                var="ptop"
+                rowClasses="even,odd"
+                rowKeyVar="row"
+              value="#{bookingAction.transportList}"
+           rendered="#{not empty bookingAction.transportList}">
+           
+           <h:column>
+             <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle
+            </f:facet>
+            <table>
+            <tr>
+            <td style="padding-right:30px;">
+             <s:graphicImage value="#{ptop.image}" height="50" width="50"  rendered="#{not empty ptop.image}"/>
+		        
+					<s:div id="image1" rendered="#{empty ptop.image}" >
+									
+						<img src="img/false.png" height="50" width="50"  />
+									
+			         </s:div>
+            </td>
+            <td>
+            
+             <b> <h:outputText value="#{ptop.fuelType} (#{ptop.comfortType})"/> </b> <br/>
+             
+            <h:outputText value="#{ptop.modelYear} Model, #{ptop.colour} Color"/>
+            </td>
+            </tr>
+            
+            </table>
+            
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle Model
+            </f:facet>
+            
+            <h:outputText value="#{ptop.model}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Journey Type
+            </f:facet>
+            
+            <h:outputText value="#{ptop.journeyTypeName}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Seating Capacity
+            </f:facet>
+            
+         <h:outputText value="#{ptop.count}"/> 
+        
+           
+        </h:column>
+        
+        
+         <h:column>
+             <f:facet name="header">
+                Price
+            </f:facet>
+            
+           <span style="font-size:16px;">    <h:outputText value="Rs. #{ptop.fare}" >
+           <f:convertNumber groupingUsed="true" minFractionDigits="2" />
+           </h:outputText>
+           </span>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Action
+            </f:facet>
+            &#160;&#160;&#160;
+          <h:commandButton id="book"
+                           styleClass="css3corner"
+                          value="Book Now"
+                         action="#{bookingAction.selectCabs(ptop)}"
+                         onclick="if(!confirm('Do you want to proceed for booking?')){return false;}"
+                         
+                         />
+        </h:column>
+        
+        
+           
+        </rich:dataTable>
+       </s:div>
+       
+       
+        <s:div rendered="#{bookingAction.serviceType eq 'Airport' and bookingAction.sourceair ne null and bookingAction.travelDateair ne null and not empty bookingAction.transportAirList}">	
+       <center>
+       <table border="0" >
+       <tr>
+       <td colspan="3" style="padding-bottom:20px;">
+      <b> Service Type selected : Airport. You searched for </b>
+       </td>
+       </tr>
+       <tr>
+       <td style="padding-right:40px;">
+       <b>From</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Pickup Date and Time</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Booking Mode</b>
+       </td>
+       </tr>
+       
+       <tr>
+       <td>
+       <h:outputText value="#{bookingAction.sourceair}"/>
+       </td>
+       
+        <td>
+        <h:outputText value="#{bookingAction.travelDateair}">
+       	<s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+       </h:outputText>
+       </td>
+        
+          <td>
+      <h:outputText value="One way" rendered="#{bookingAction.airportTwoway eq false}"/>
+      <h:outputText value="Two way" rendered="#{bookingAction.airportTwoway eq true}"/>
+       </td>
+       
+       
+       </tr>
+       
+       </table>
+       </center>
+       <br/><br/>
+       <center><b><h:outputText value="No Vehicles available for the selected criteria" rendered="#{empty bookingAction.transportAirList}"></h:outputText></b></center>
+        <rich:dataTable id="airsearchList"
+                var="air"
+                rowClasses="even,odd"
+                rowKeyVar="row"
+              value="#{bookingAction.transportAirList}"
+           rendered="#{not empty bookingAction.transportAirList}">
+           
+           <h:column>
+             <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle
+            </f:facet>
+            <table>
+            <tr>
+            <td style="padding-right:30px;">
+             <s:graphicImage value="#{air.image}" height="50" width="50"  rendered="#{not empty air.image}"/>
+		        
+					<s:div id="image1" rendered="#{empty air.image}" >
+									
+						<img src="img/false.png" height="50" width="50"  />
+									
+			         </s:div>
+            </td>
+            <td>
+            
+             <b> <h:outputText value="#{air.fuelType} (#{air.comfortType})"/> </b> <br/>
+             
+            <h:outputText value="#{air.modelYear} Model, #{air.colour} Color"/>
+            </td>
+            </tr>
+            
+            </table>
+            
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle Model
+            </f:facet>
+            
+            <h:outputText value="#{air.model}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Journey Type
+            </f:facet>
+            
+            <h:outputText value="#{air.journeyTypeName}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Seating Capacity
+            </f:facet>
+            
+         <h:outputText value="#{air.count}"/> 
+        
+           
+        </h:column>
+        
+        
+         <h:column>
+         
+             <f:facet name="header">
+                Price
+            </f:facet>
+            
+           <table>
+           <tr>
+           <td>
+            <span style="font-size:16px;">    <h:outputText value="Rs. #{air.fare}" >
+           <f:convertNumber groupingUsed="true" minFractionDigits="2" />
+           </h:outputText>
+           </span>
+           </td>
+           </tr>
+           
+           <tr>
+           <td>
+           <h:outputText  value="Parking Charges per hour: #{air.parkingCharge}"/>
+           </td>
+           </tr>
+           
+           </table> 
+          
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Action
+            </f:facet>
+            &#160;&#160;&#160;
+          <h:commandButton id="bookair"
+                           styleClass="css3corner"
+                          value="Book Now"
+                         action="#{bookingAction.selectCabs(air)}"
+                         onclick="if(!confirm('Do you want to proceed for booking?')){return false;}"
+                         
+                         />
+        </h:column>
+        
+        
+           
+        </rich:dataTable>
+       
+       
+       </s:div>
+       
+       
+       <s:div rendered="#{bookingAction.serviceType eq 'Packaged' and bookingAction.sourcepack ne null and bookingAction.travelDatepack ne null and bookingAction.durationpack ne null and not empty bookingAction.transportPackList}">	
+       <center>
+       <table border="0" >
+       <tr>
+       <td colspan="3" style="padding-bottom:20px;">
+      <b> Service Type selected : Package. You searched for </b>
+       </td>
+       </tr>
+       <tr>
+       <td style="padding-right:40px;">
+       <b>From</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Pickup Date and Time</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>No. of Hours</b>
+       </td>
+       </tr>
+       
+       <tr>
+       <td>
+       <h:outputText value="#{bookingAction.sourcepack}"/>
+       </td>
+       
+        <td>
+        <h:outputText value="#{bookingAction.travelDatepack}">
+       	<s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+       </h:outputText>
+       </td>
+        
+          <td>
+      <h:outputText value="#{bookingAction.durationpack}" />
+      
+       </td>
+       
+       
+       </tr>
+       
+       </table>
+       </center>
+       <br/><br/>
+       <center><b><h:outputText value="No Vehicles available for the selected criteria" rendered="#{empty bookingAction.transportPackList}"></h:outputText></b></center>
+        <rich:dataTable id="packsearchList"
+                var="pack"
+                rowClasses="even,odd"
+                rowKeyVar="row"
+              value="#{bookingAction.transportPackList}"
+           rendered="#{not empty bookingAction.transportPackList}">
+           
+           <h:column>
+             <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle
+            </f:facet>
+            <table>
+            <tr>
+            <td style="padding-right:30px;">
+             <s:graphicImage value="#{pack.image}" height="50" width="50"  rendered="#{not empty pack.image}"/>
+		        
+					<s:div id="image1" rendered="#{empty pack.image}" >
+									
+						<img src="img/false.png" height="50" width="50"  />
+									
+			         </s:div>
+            </td>
+            <td>
+            
+             <b> <h:outputText value="#{pack.fuelType} (#{pack.comfortType})"/> </b> <br/>
+             
+            <h:outputText value="#{pack.modelYear} Model, #{pack.colour} Color"/>
+            </td>
+            </tr>
+            
+            </table>
+            
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle Model
+            </f:facet>
+            
+            <h:outputText value="#{pack.model}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Journey Type
+            </f:facet>
+            
+            <h:outputText value="#{pack.journeyTypeName}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Seating Capacity
+            </f:facet>
+            
+         <h:outputText value="#{pack.count}"/> 
+        
+           
+        </h:column>
+        
+        
+         <h:column>
+         
+             <f:facet name="header">
+                Price
+            </f:facet>
+            
+           <table>
+           <tr>
+           <td>
+            <span style="font-size:16px;">    <h:outputText value="Rs. #{pack.farePerKm} / hr" >
+           <f:convertNumber groupingUsed="true" minFractionDigits="2" />
+           </h:outputText>
+           </span>
+           </td>
+           </tr>
+           
+           <tr>
+           <td>
+           <h:outputText  value="Minimum Billing: Rs #{pack.fare}"/>
+           </td>
+           </tr>
+           
+           </table> 
+          
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Action
+            </f:facet>
+            &#160;&#160;&#160;
+          <h:commandButton id="bookpack"
+                           styleClass="css3corner"
+                          value="Book Now"
+                         action="#{bookingAction.selectCabs(pack)}"
+                         onclick="if(!confirm('Do you want to proceed for booking?')){return false;}"
+                         
+                         />
+        </h:column>
+        
+        
+           
+        </rich:dataTable>
+       
+       
+       </s:div>
+       
+       
+       <s:div rendered="#{bookingAction.serviceType eq 'Outstation' and bookingAction.sourceout ne null and bookingAction.destout ne null and bookingAction.travelDateout ne null and bookingAction.durationout ne null and not empty bookingAction.transportOutList}">	
+       <center>
+       <table border="0" >
+       <tr>
+       <td colspan="3" style="padding-bottom:20px;">
+      <b> Service Type selected : Outstation. You searched for </b>
+       </td>
+       </tr>
+       <tr>
+       <td style="padding-right:40px;">
+       <b>From</b>
+       </td>
+        <td style="padding-right:40px;">
+       <b>To</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Approx Kms</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Pickup Date and Time</b>
+       </td>
+       <td style="padding-right:40px;">
+       <b>Duration</b>
+       </td>
+       </tr>
+       
+       <tr>
+       <td>
+       <h:outputText value="#{bookingAction.sourceout}"/>
+       </td>
+        <td>
+        <h:outputText value="#{bookingAction.destout}"/>
+       </td>
+        <td>
+        <h:outputText value="#{bookingAction.locationDistanceOut} Km"/>
+        </td>
+        <td>
+        <h:outputText value="#{bookingAction.travelDateout}">
+       	<s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
+       </h:outputText>
+       </td>
+        
+          <td>
+      <h:outputText value="#{bookingAction.durationout} days" />
+      
+       </td>
+       
+       
+       </tr>
+       
+        <tr>
+       <td>
+        <h:outputText value="#{bookingAction.destout}"/>
+      
+       </td>
+        <td>
+       <h:outputText value="#{bookingAction.sourceout}"/>
+       </td>
+       
+       <td colspan="3">
+        <h:outputText value="#{bookingAction.locationDistanceOut} Km"/>
+        </td>
+        
+       
+        
+       
+       
+       </tr>
+       
+       
+       </table>
+       </center>
+       <br/><br/>
+       <center><b><h:outputText value="No Vehicles available for the selected criteria" rendered="#{empty bookingAction.transportOutList}"></h:outputText></b></center>
+        <rich:dataTable id="outsearchList"
+                var="out"
+                rowClasses="even,odd"
+                rowKeyVar="row"
+              value="#{bookingAction.transportOutList}"
+           rendered="#{not empty bookingAction.transportOutList}">
+           
+           <h:column>
+             <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle
+            </f:facet>
+            <table>
+            <tr>
+            <td style="padding-right:30px;">
+             <s:graphicImage value="#{out.image}" height="50" width="50"  rendered="#{not empty out.image}"/>
+		        
+					<s:div id="image1" rendered="#{empty out.image}" >
+									
+						<img src="img/false.png" height="50" width="50"  />
+									
+			         </s:div>
+            </td>
+            <td>
+            
+             <b> <h:outputText value="#{out.fuelType} (#{out.comfortType})"/> </b> <br/>
+             
+            <h:outputText value="#{out.modelYear} Model, #{out.colour} Color"/>
+            </td>
+            </tr>
+            
+            </table>
+            
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Vehicle Model
+            </f:facet>
+            
+            <h:outputText value="#{out.model}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Journey Type
+            </f:facet>
+            
+            <h:outputText value="#{out.journeyTypeName}"/>
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Seating Capacity
+            </f:facet>
+            
+         <h:outputText value="#{out.count}"/> 
+        
+           
+        </h:column>
+        
+        
+         <h:column>
+         
+             <f:facet name="header">
+                Price
+            </f:facet>
+            
+           <table>
+           <tr>
+           <td>
+            <span style="font-size:16px;">    <h:outputText value="Rs. #{out.farePerKm} / Km" >
+           <f:convertNumber groupingUsed="true" minFractionDigits="2" />
+           </h:outputText>
+           </span>
+           </td>
+           </tr>
+           
+           <tr>
+           <td>
+           <h:outputText  value="Minimum Billing: "/> <br/> <b>Rs #{out.fare}</b>
+           </td>
+           </tr>
+           
+           </table> 
+          
+        
+           
+        </h:column>
+        
+         <h:column>
+             <f:facet name="header">
+                Action
+            </f:facet>
+            &#160;&#160;&#160;
+          <h:commandButton id="bookout"
+                           styleClass="css3corner"
+                          value="Book Now"
+                         action="#{bookingAction.selectCabs(out)}"
+                         onclick="if(!confirm('Do you want to proceed for booking?')){return false;}"
+                         
+                         />
+        </h:column>
+        
+        
+           
+        </rich:dataTable>
+       
+       
+       </s:div>
+   
+    	
+    </rich:panel>
+ </s:div>
+		   	
+		   	
+		   	
+           </rich:panel>
+            </td>
+            
+            </tr>
+            
+            </table>
+          
+		   	
+         </rich:panel>   
+    </h:form>
+ </s:div>
+ <br/><br/>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+</ui:define>
+
+</ui:composition>

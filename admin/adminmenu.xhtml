@@ -1,0 +1,245 @@
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <rich:toolBarGroup>
+        <h:outputText value="#{projectName}:" rendered="false"/>
+        <s:link id="menuHomeId" view="/adminhome.xhtml" value="Home" propagation="none" rendered="false"/>
+    </rich:toolBarGroup>
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none" rendered="false">
+        <f:facet name="label">Browse data</f:facet>
+	<rich:menuItem>
+    	<s:link view="/ModelTypeList.xhtml"
+           	value="ModelType List"
+           	id="ModelTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CompanyList.xhtml"
+           	value="Company List"
+           	id="CompanyId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/UsersRolesList.xhtml"
+           	value="UsersRoles List"
+           	id="UsersRolesId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CorporateFormList.xhtml"
+           	value="CorporateForm List"
+           	id="CorporateFormId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportTypeList.xhtml"
+           	value="TransportType List"
+           	id="TransportTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/RolesList.xhtml"
+           	value="Roles List"
+           	id="RolesId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportLocationPointList.xhtml"
+           	value="TransportLocationPoint List"
+           	id="TransportLocationPointId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/InvoiceList.xhtml"
+           	value="Invoice List"
+           	id="InvoiceId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TestimonialsList.xhtml"
+           	value="Testimonials List"
+           	id="TestimonialsId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/BookingList.xhtml"
+           	value="Booking List"
+           	id="BookingId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/EnquiriesList.xhtml"
+           	value="Enquiries List"
+           	id="EnquiriesId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/JourneyTypeList.xhtml"
+           	value="JourneyType List"
+           	id="JourneyTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportPtopList.xhtml"
+           	value="TransportPtop List"
+           	id="TransportPtopId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportList.xhtml"
+           	value="Transport List"
+           	id="TransportId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportAirportList.xhtml"
+           	value="TransportAirport List"
+           	id="TransportAirportId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ReferedCustomersDataList.xhtml"
+           	value="ReferedCustomersData List"
+           	id="ReferedCustomersDataId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/DriverScheduleList.xhtml"
+           	value="DriverSchedule List"
+           	id="DriverScheduleId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportOutstationList.xhtml"
+           	value="TransportOutstation List"
+           	id="TransportOutstationId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/DriverList.xhtml"
+           	value="Driver List"
+           	id="DriverId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CustomerCommentsList.xhtml"
+           	value="CustomerComments List"
+           	id="CustomerCommentsId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ComplaintList.xhtml"
+           	value="Complaint List"
+           	id="ComplaintId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportServiceTypeList.xhtml"
+           	value="TransportServiceType List"
+           	id="TransportServiceTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/LocationPointList.xhtml"
+           	value="LocationPoint List"
+           	id="LocationPointId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportTransportTypeList.xhtml"
+           	value="TransportTransportType List"
+           	id="TransportTransportTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/SeatingTypeList.xhtml"
+           	value="SeatingType List"
+           	id="SeatingTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/SmsHistoryList.xhtml"
+           	value="SmsHistory List"
+           	id="SmsHistoryId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/ServiceTypeList.xhtml"
+           	value="ServiceType List"
+           	id="ServiceTypeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/PaymentDetailsList.xhtml"
+           	value="PaymentDetails List"
+           	id="PaymentDetailsId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CustomersDataList.xhtml"
+           	value="CustomersData List"
+           	id="CustomersDataId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/EmailHistoryList.xhtml"
+           	value="EmailHistory List"
+           	id="EmailHistoryId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/UsersDataList.xhtml"
+           	value="UsersData List"
+           	id="UsersDataId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TransportPackageList.xhtml"
+           	value="TransportPackage List"
+           	id="TransportPackageId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <!-- @newMenuItem@ -->
+    <rich:toolBarGroup location="right">
+        <h:outputText id="menuWelcomeId" value="signed in as: #{credentials.username}" rendered="#{identity.loggedIn}"/>
+        
+        <s:link id="menuLogoutId" view="/adminlogin.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+    </rich:toolBarGroup>
+</rich:toolBar>

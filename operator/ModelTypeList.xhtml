@@ -1,0 +1,172 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="operatortemplate.xhtml">
+
+<ui:define name="body">
+<a4j:outputPanel ajaxRendered="true">
+<h:messages globalOnly="true" styleClass="message" id="globalMessages" errorStyle="color:red" infoStyle="color:green"/>
+</a4j:outputPanel>
+    <a4j:form id="journeyTypeSearch" styleClass="edit">
+
+       <center><table><tr><td>
+         
+                <h:inputText id="modelTypeName" value="#{modelTypeAction.searchString}" style="width:300px"/>
+            
+                      
+            </td><td>
+            	<div class="submit"><a4j:commandButton status="searchStatus" id="search" value="Search" reRender="modelId" action="#{modelTypeAction.search}"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="searchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			<tr><td>
+			<center>	<h:outputText value="(Modeld using Model Type)"></h:outputText></center>
+			</td></tr>
+			</table> 
+        </center>  
+
+       
+
+  
+
+    <rich:panel id="modelId">
+        <f:facet name="header">Model Type Search Results (#{empty modelTypeAction.modelTypeList ? 0 : modelTypeAction.modelTypeList.size})</f:facet>
+    <div class="results" id="modelTypeList">
+
+    <h:outputText value="Search returned no results."
+               rendered="#{empty modelTypeAction.modelTypeList}"/>
+
+    <rich:dataTable id="modelTypeList"
+                var="_modelType"
+                rowKeyVar="row"
+              value="#{modelTypeAction.modelTypeList}"
+           rendered="#{not empty modelTypeAction.modelTypeList}">
+        <h:column>
+            <f:facet name="header">
+                Sno
+            </f:facet>
+            <h:outputText value="#{row + 1}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+               Model
+            </f:facet>
+            <h:outputText value="#{_modelType.model}"/>
+        </h:column>
+        
+        
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <a4j:commandLink value="Edit" action="#{modelTypeAction.edit}" reRender="createId" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                <f:param name="modelTypeId"
+                        value="#{_modelType.id}"/>
+            </a4j:commandLink>
+            #{' '}
+             <a4j:commandLink value="Delete" action="#{modelTypeAction.remove}" reRender="modelId" onclick="if(!confirm('Are you really want to delete?')){return false;}">
+                <f:param name="modelTypeId"
+                        value="#{_modelType.id}"/>
+            </a4j:commandLink>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <br/>
+    </a4j:form>
+    <h:form>
+    <table><tr><td>
+            	<div class="submit"><a4j:commandButton status="createStatus" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="create" value="Create"  action="#{modelTypeAction.init}" reRender="createId"/></div>
+			</td><td>
+     				 <div class="spin"> 
+	      				<a4j:region id="createStatusId">
+	      						<a4j:status id="createStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div></td></tr>
+			
+			</table> 
+
+ </h:form>
+ 
+ 
+ <s:div id="createId" >
+ <h:form id="modelType" styleClass="edit" rendered="#{modelTypeAction.formDisplayed eq true}">
+
+        <rich:panel>
+            <f:facet name="header">#{modelTypeAction.modelType.id ne null ? 'Edit' : 'Add'} Model type</f:facet>
+
+
+
+          
+
+            <s:decorate id="modelTypeField" template="edit.xhtml">
+                <ui:define name="label">Model</ui:define>
+                <h:inputText id="modelType"
+                           size="45"
+                      maxlength="45"
+                          value="#{modelTypeAction.modelType.model}" required="true">
+                    <a4j:support event="onblur" reRender="modelTypeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <a4j:commandButton id="save"
+                          value="Save"
+                         action="#{modelTypeAction.persist}"
+                         rendered="#{modelTypeAction.modelType.id eq null}"
+                         reRender="createId,modelId"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
+
+            <a4j:commandButton id="update"
+                          value="Update"
+                         action="#{modelTypeAction.update}"
+                       rendered="#{modelTypeAction.modelType.id ne null}"
+                       onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                       reRender="createId,modelId"/>
+
+           
+
+            <a4j:commandButton id="cancel"
+                   value="Cancel" reRender="createId" immediate="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+                <a4j:actionparam name="selectThis" value="false" assignTo="#{modelTypeAction.formDisplayed}"/> 
+             </a4j:commandButton>   
+            
+
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>

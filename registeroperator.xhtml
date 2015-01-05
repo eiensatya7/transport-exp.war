@@ -1,0 +1,288 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    template="hometemplate.xhtml">
+
+<ui:define name="body">
+
+<script>
+function passwordConfirmation(obj)
+{
+	var pass =document.getElementById('usersData:passwordField:password').value;
+	var confirmPass =obj.value;
+
+	if(pass!=confirmPass)
+	{
+		alert('password and confirm password did not match');
+		document.getElementById('usersData:passwordField:password').value="";
+		obj.value="";
+		document.getElementById('usersData:passwordField:password').focus();
+	}
+
+	
+}
+
+
+</script>
+
+<s:div id="createId" >
+ <h:form id="usersData" styleClass="edit" >
+
+        <rich:panel>
+                        
+<f:facet name="header">Operator Request Form</f:facet>
+
+ 			  <s:decorate id="textdataOneField" template="edit.xhtml">
+             <h3 style="font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+font-weight:bold;
+margin-bottom:8px;
+color:#9f6976;">Company Information </h3></s:decorate>
+             
+               <s:decorate id="nameField" template="edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="companyname"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.name}" required="true" validator="#{customValidator.companynameOperatorValidator}">
+                    <a4j:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <s:decorate id="companyaddressField" template="edit.xhtml">
+                <ui:define name="label">Address</ui:define>
+                <h:inputTextarea id="address"
+                               cols="80"
+                               rows="2"
+                              value="#{usersDataAction.address}" required="true" />
+                              <a4j:support event="onblur" reRender="companyaddressField" bypassUpdates="true" ajaxSingle="true"/>
+            </s:decorate>
+
+            <s:decorate id="companyemailIdField" template="edit.xhtml">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="emailId"
+                           size="45"
+                      maxlength="45"
+                          value="#{usersDataAction.emailId}" required="true" validator="#{customValidator.emailOperatorValidator}">
+                    <a4j:support event="onblur" reRender="companyemailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+
+            
+
+
+            <s:decorate id="websiteField" template="edit.xhtml">
+                <ui:define name="label">Website</ui:define>
+                <h:inputText id="website"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.website}" required="true" validator="#{customValidator.websiteOperatorValidator}">
+                    <a4j:support event="onblur" reRender="websiteField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+           <s:decorate id="companycontactNoField" template="edit.xhtml">
+                <ui:define name="label">Contact no </ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{usersDataAction.contactNumber}" required="true" validator="#{customValidator.contactOperatorValidator}">
+                    <a4j:support event="onblur" reRender="companycontactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+              
+              <s:decorate id="dummytextdataOneField" template="edit.xhtml">
+              <ui:define name="label"></ui:define>
+              </s:decorate>
+             <s:decorate id="textdataField" template="edit.xhtml">
+              <h3 style="font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:13px;
+font-weight:bold;
+margin-bottom:8px;
+color:#9f6976;">Operator Information </h3>
+</s:decorate>
+             
+             <s:decorate id="firstNameField" template="edit.xhtml">
+                <ui:define name="label">First Name</ui:define>
+                <h:inputText id="firstName"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.firstName}" required="true">
+                    <a4j:support event="onblur" reRender="firstNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+           <s:decorate id="lastNameField" template="edit.xhtml">
+                <ui:define name="label">Last Name</ui:define>
+                <h:inputText id="lastName"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.lastName}">
+                    <a4j:support event="onblur" reRender="lastNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="addressField" template="edit.xhtml">
+                <ui:define name="label">Operator Address</ui:define>
+                <h:inputTextarea id="address"
+                               cols="80"
+                               rows="2"
+                              value="#{usersDataAction.usersData.address}" required="true"/>
+            </s:decorate>
+            
+              <s:decorate id="cityField" template="edit.xhtml">
+                <ui:define name="label">City</ui:define>
+                <h:inputText id="city"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.city}">
+                    <a4j:support event="onblur" reRender="cityField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="stateField" template="edit.xhtml">
+                <ui:define name="label">State</ui:define>
+                   <h:selectOneMenu id="stateId" style="font-size:8pt; width :170px;"  value="#{usersDataAction.usersData.state}" required="true">					
+						<s:selectItems value="#{usersDataAction.stateList}" var="so" label="#{so}" itemValue="#{so}" noSelectionLabel="--Select State--"/>
+							<a4j:support event="onchange" reRender="stateField"  bypassUpdates="true" ajaxSingle="true"/>
+				
+					</h:selectOneMenu>
+                <h:inputText id="state"
+                           size="65"
+                      maxlength="65"
+                          value="#{usersDataAction.usersData.state}" rendered="false">
+                    <a4j:support event="onblur" reRender="stateField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+
+           
+            <s:decorate id="contactNoField" template="edit.xhtml">
+                <ui:define name="label">Operator Contact</ui:define>
+                <h:inputText id="contactNo"
+                           size="20"
+                      maxlength="20"
+                      onkeypress="if((event.which &lt; 48 || event.which &gt; 57 ) &#38; !(event.which == 8)) return false;"
+                          value="#{usersDataAction.usersData.contactNo}" required="true" validator="#{customValidator.contactOperatorUserValidator}">
+                    <a4j:support event="onblur" reRender="contactNoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            <s:decorate id="emailIdFieldedit" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="useremailIdedit"
+                           size="45"
+                      maxlength="45"
+                          value="#{usersDataAction.usersData.emailId}" required="true" validator="#{customValidator.emailUserValidator}">
+                    <a4j:support event="onblur" reRender="emailIdFieldedit" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            <s:decorate id="emailIdField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id ne null}">
+                <ui:define name="label">Email id</ui:define>
+                <h:inputText id="emailId"
+                           size="45"
+                      maxlength="45"
+                      disabled="true"
+                          value="#{usersDataAction.usersData.emailId}" >
+                    <a4j:support event="onblur" reRender="emailIdField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="userNameFieldedit" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">User Name</ui:define>
+                <h:inputText id="useruserNameedit"
+                           size="20"
+                      maxlength="20"
+                          value="#{usersDataAction.usersData.username}" required="true" validator="#{customValidator.usernameUserValidator}">
+                    <a4j:support event="onblur" reRender="userNameFieldedit" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+             <s:decorate id="userNameField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id ne null}">
+                <ui:define name="label">User Name</ui:define>
+                <h:inputText id="userName"
+                           size="20"
+                      maxlength="20"
+                      disabled="true"
+                          value="#{usersDataAction.usersData.username}">
+                    <a4j:support event="onblur" reRender="userNameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+           <s:decorate id="passwordField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Password</ui:define>
+                <h:inputSecret id="password" required="true" redisplay="true"
+                                value="#{usersDataAction.usersData.password}">
+                    <a4j:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
+                    </h:inputSecret>
+            </s:decorate>
+
+
+          <s:decorate id="confirmPasswordField" template="edit.xhtml" rendered="#{usersDataAction.usersData.id eq null}">
+                <ui:define name="label">Confirm Password</ui:define>
+                <h:inputSecret id="confirmpassword" required="true"  onblur="passwordConfirmation(this)">
+                   </h:inputSecret>
+                
+            </s:decorate> 
+            
+         
+          
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+            
+            
+            
+                 
+                    </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                          action="/userhome.xhtml"
+                         actionListener="#{usersDataAction.persistOperatorRequest}"
+                         onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"
+                         />
+                         
+                        
+            
+            <h:commandButton id="cancel"
+                   value="Cancel" action="/userhome.xhtml" immediate="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')">
+                   
+               
+             </h:commandButton>   
+            
+<br/><br/>
+
+ <div class="spin"> 
+	      				<a4j:region id="searchStatusId">
+	      						<a4j:status id="sousearchStatus">
+					        	<f:facet name="start">
+					        		<img src="../img/loading.gif"/>
+					        	</f:facet>
+				        	</a4j:status>	
+				       </a4j:region>
+      				</div>
+          
+
+        </div>
+    </h:form>
+ </s:div>
+
+</ui:define>
+
+</ui:composition>
