@@ -69,7 +69,7 @@ border-bottom: 1px solid #D5D5D5;
 
 h3{
 font-family: Arial;
-font-size: 16px;
+font-size: 17px;
 color: #454545;
 
 
@@ -167,7 +167,7 @@ font-weight: bold;
                     <a href="#" class="tlast">Outstation</a>
                  </div></td></tr>
 		    <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
@@ -218,18 +218,18 @@ font-weight: bold;
 		    
 		    
 		   <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
-                		   	<h3 style="margin-bottom:10px;">Pickup Date and Time:</h3>
+                		   	<h3 style="margin-bottom:10px;">Pickup Date:</h3>
 
 		   	</td>
 		   	</tr>
 		   	<tr>
 		   	<td>
-		   	<s:div id="datetimediv">
-		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/calBut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   	<s:div id="datediv">
+		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/calbut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
 		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
 		   	</rich:calendar>
              </s:div>
@@ -237,30 +237,45 @@ font-weight: bold;
 		   	</tr>
 		   	</table>
 		    </td>
-		    
-		   
-		    <td valign="bottom">
-		    
-		    <table>
+               <td>
+		    <table >
 		   	<tr>
 		   	<td>
-		   	<b style="font-weight:600;font-size:12px;"> </b>
+                		   	<h3 style="margin-bottom:10px;">Pickup Time:</h3>
+
 		   	</td>
 		   	</tr>
 		   	<tr>
+		   	<td>
+		   	<s:div id="timediv">
+		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/timebut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
+		   	</rich:calendar>
+             </s:div>
+		   	</td>		   	
+		   	</tr>
+		   	</table>
+		    </td>
+               </tr>
+		    </table>
+                
+		    
+		    
+		    <table style="margin-top:35px;margin-left:auto;margin-right:auto;">
+		  
+		   	<tr>
 		   	<td >
 		   	<s:div id="submitdiv">
-		   	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-		   	<a4j:commandButton styleClass="css3cornerone" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="search" value="Search Cabs"  action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	<a4j:commandButton  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="search" value="Search Cabs" action="#{bookingAction.searchCabs}" reRender="responseId"/>
 		   	
              </s:div>
 		   	</td>		   	
 		   	</tr>
 		    
 		    </table>
-		    </td>
-		    </tr>
-		    </table>
+		 
+               
+		    
 		    
 		   	
 		   	</s:div>
@@ -269,7 +284,7 @@ font-weight: bold;
 		   	<s:div rendered="#{bookingAction.serviceType eq 'Airport'}">	
 		    <table style="padding: 0px 0px 12px 120px;">
 		    <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
@@ -360,7 +375,7 @@ font-weight: bold;
 		   	<s:div rendered="#{bookingAction.serviceType eq 'Packaged'}">	
 		    <table style="padding: 0px 0px 12px 120px;">
 		    <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
@@ -414,7 +429,7 @@ font-weight: bold;
 		    
 		    
 		   <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    
 		     <table >
 		   	<tr>
@@ -481,7 +496,7 @@ font-weight: bold;
 		   	<s:div rendered="#{bookingAction.serviceType eq 'Outstation'}">	
 		    <table style="padding: 0px 0px 12px 120px;">
 		    <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
@@ -533,7 +548,7 @@ font-weight: bold;
 		    
 		    
 		   <tr>
-		    <td style="padding-right:50px;">
+		    <td>
 		    <table >
 		   	<tr>
 		   	<td>
