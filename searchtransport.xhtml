@@ -114,139 +114,29 @@ font-weight: bold;
 
  
 
-        <rich:panel style="height:800px;">
-            <h2>Book Cabs Online</h2>
            
             <table width="100%">
             
             <tr>
             
-            <td width="20%" style="padding-right:30px;">
-            <table >
-            <tr >
-               <td style="padding-bottom:10px;">
-               <center><span style="font-family: tahoma; font-size: 15px; color: #4e5849"><h3>Filter your search</h3></span></center><br/>
-		             <rich:simpleTogglePanel switchType="client" label="Select Model">
-		       			<table>
-            				<ui:repeat var="model" value="#{bookingAction.modelList}">
-									<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{model.selected}" />
-                       						&#160;&#160;
-                       						<h:outputText value="#{model.model}"/>
-                  						 </td>
-                					</tr>
-							</ui:repeat>
-        				</table>
-		    		</rich:simpleTogglePanel>  
-               </td>
-            </tr>
-            
-            <tr>
-               <td style="padding-bottom:10px;">
-		             <rich:simpleTogglePanel switchType="client" label="Select Seating">
-		       			<table>
-            				<ui:repeat var="seating" value="#{bookingAction.seatingTypeList}">
-									<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{seating.selected}" />
-                       						&#160;&#160;
-                       						<h:outputText value="#{seating.count}"/>
-                  						 </td>
-                					</tr>
-							</ui:repeat>
-        				</table>
-		    		</rich:simpleTogglePanel>  
-               </td>
-            </tr>
-            
-            <tr>
-               <td style="padding-bottom:10px;">
-		             <rich:simpleTogglePanel switchType="client" label="Select Journey Type">
-		       			<table>
-            				<ui:repeat var="journey" value="#{bookingAction.journeyTypeList}">
-									<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{journey.selected}" />
-                       						&#160;&#160;
-                       						<h:outputText value="#{journey.journeyType}"/>
-                  						 </td>
-                					</tr>
-							</ui:repeat>
-        				</table>
-		    		</rich:simpleTogglePanel>  
-               </td>
-            </tr>
-            
-            <tr>
-               <td style="padding-bottom:10px;">
-		             <rich:simpleTogglePanel switchType="client" label="Air Conditioning">
-		       			<table>
-            				
-									<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{bookingAction.ac}"/>
-                       						<h:outputText value="A/C"/>
-                  						 </td>
-                					</tr>
-                					
-                					<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{bookingAction.nonac}"/>
-                       						<h:outputText value="Non A/C"/>
-                  						 </td>
-                					</tr>
-							
-        				</table>
-		    		</rich:simpleTogglePanel>  
-               </td>
-            </tr>
-            
-            <tr>
-               <td style="padding-bottom:10px;">
-		             <rich:simpleTogglePanel switchType="client" label="Select Fuel">
-		       			<table>
-            				
-									<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{bookingAction.petrol}"/>
-                       						<h:outputText value="Petrol"/>
-                  						 </td>
-                					</tr>
-                					
-                					<tr>
-                    					<td>
-                       						<h:selectBooleanCheckbox value="#{bookingAction.diesel}"/>
-                       						<h:outputText value="Diesel"/>
-                  						 </td>
-                					</tr>
-                					
-                					
-							
-        				</table>
-		    		</rich:simpleTogglePanel>  
-               </td>
-            </tr>
-            
-            
-            
-            </table>
-           
-            
-            </td>
+        
             
             
             
             <td valign="top">
-            <center><span style="font-family: tahoma; font-size: 15px; color: #4e5849"><h3>Select your booking</h3></span></center><br/>
+            <br />
+                <br />
+            <h1>Select your booking</h1>
             <rich:panel>
-              <table cellpadding="7" style="padding: 0px 0px 12px 120px;">
+                <br/>
+                
+            <!--  <table cellpadding="7" style="margin-left:auto;margin-right:auto;">
             
             <tr>
             
           
              <td >
-            <h4> 
+            
             <h:selectOneRadio value="#{bookingAction.serviceType}" style="width:490px;font-size:17px;">
 		            	<f:selectItem itemValue="Point to Point" itemLabel="Point To Point" />
 		            	<f:selectItem itemValue="Airport" itemLabel="AirPort" />
@@ -254,33 +144,41 @@ font-weight: bold;
 			   			<f:selectItem itemValue="Outstation" itemLabel="Out Station"/>
 			   			<a4j:support event="onchange" reRender="subPanel,responseId"  ajaxSingle="true" onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')"/>
 		   			</h:selectOneRadio>
-		 </h4>
+                
+		 
             </td>
             
             </tr>
             
-            </table>
+            </table>-->
           
+                
            
 		   	
 		  
 		   	<a4j:outputPanel id="subPanel">
 		   	
 		    <s:div rendered="#{bookingAction.serviceType eq 'Point to Point'}">	
-		    <table style="padding: 0px 0px 12px 120px;">
+		    <table style="margin-left:auto;margin-right:auto;">
+                <tr><td><div class="typeSelector">
+                    <a class="typeActive" href="#">Point To Point</a>
+                    <a href="#">Airport</a>
+                    <a href="#">Package</a>
+                    <a href="#" class="tlast">Outstation</a>
+                 </div></td></tr>
 		    <tr>
 		    <td style="padding-right:50px;">
 		    <table >
 		   	<tr>
 		   	<td>
-		   	<h4> Source Locality</h4>
+		   	<h3 style="margin-bottom:10px;">Pickup Area:</h3>
 		   	</td>
 		   	</tr>
 		   	<tr>
 		   	<td>
 		   	<s:div id="sourceiddiv">
 		   	
-		   	<h:selectOneMenu id="sourceptopId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.sourceptop}" >					
+		   	<h:selectOneMenu id="sourceptopId" value="#{bookingAction.sourceptop}" >					
 						<s:selectItems value="#{bookingAction.ptopsourceLocationList}" var="ptop" label="#{ptop}" itemValue="#{ptop}" noSelectionLabel="--Select Source Locality--"/>
 							
 				
@@ -298,13 +196,13 @@ font-weight: bold;
 		    <table>
 		   	<tr>
 		   	<td>
-		   	<h4>  Destination Locality</h4>
+		   	<h3 style="margin-bottom:10px;">Drop Area:</h3>
 		   	</td>
 		   	</tr>
 		   	<tr>
 		   	<td>
 		   	<s:div id="destiddiv">
-		   	<h:selectOneMenu id="destptopId" style="width:225px;height:25px;font-size:14px;" value="#{bookingAction.destptop}" >					
+		   	<h:selectOneMenu id="destptopId" value="#{bookingAction.destptop}" >					
 						<s:selectItems value="#{bookingAction.ptopdestLocationList}" var="ptop" label="#{ptop}" itemValue="#{ptop}" noSelectionLabel="--Select Destination Locality--"/>
 							
 				
@@ -324,13 +222,14 @@ font-weight: bold;
 		    <table >
 		   	<tr>
 		   	<td>
-		   	<h4> Pickup Date and Time </h4>
+                		   	<h3 style="margin-bottom:10px;">Pickup Date and Time:</h3>
+
 		   	</td>
 		   	</tr>
 		   	<tr>
 		   	<td>
 		   	<s:div id="datetimediv">
-		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday"  inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/calBut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
 		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
 		   	</rich:calendar>
              </s:div>
@@ -1425,13 +1324,126 @@ font-weight: bold;
 		   	
            </rich:panel>
             </td>
+                <td width="25%" style="padding-left:30px;padding-top:70px">
+                    
+            <rich:panel>        
+            <table >
+            <h4 style="margin-top:10px;">More Search Filters : </h4>
+            <tr >
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Model">
+		       			<table>
+            				<ui:repeat var="model" value="#{bookingAction.modelList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{model.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{model.model}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
             
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Seating">
+		       			<table>
+            				<ui:repeat var="seating" value="#{bookingAction.seatingTypeList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{seating.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{seating.count}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Journey Type">
+		       			<table>
+            				<ui:repeat var="journey" value="#{bookingAction.journeyTypeList}">
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{journey.selected}" />
+                       						&#160;&#160;
+                       						<h:outputText value="#{journey.journeyType}"/>
+                  						 </td>
+                					</tr>
+							</ui:repeat>
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Air Conditioning">
+		       			<table>
+            				
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.ac}"/>
+                       						<h:outputText value=" A/C"/>
+                  						 </td>
+                					</tr>
+                					
+                					<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.nonac}"/>
+                       						<h:outputText value=" Non A/C"/>
+                  						 </td>
+                					</tr>
+							
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            <tr>
+               <td style="padding-bottom:10px;">
+		             <rich:simpleTogglePanel switchType="client" label="Select Fuel">
+		       			<table>
+            				
+									<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.petrol}"/>
+                       						<h:outputText value=" Petrol"/>
+                  						 </td>
+                					</tr>
+                					
+                					<tr>
+                    					<td>
+                       						<h:selectBooleanCheckbox value="#{bookingAction.diesel}"/>
+                       						<h:outputText value=" Diesel"/>
+                  						 </td>
+                					</tr>
+                					
+                					
+							
+        				</table>
+		    		</rich:simpleTogglePanel>  
+               </td>
+            </tr>
+            
+            
+            
+            </table>
+           </rich:panel>
+            
+            </td>
             </tr>
             
             </table>
           
 		   	
-         </rich:panel>   
     </h:form>
  </s:div>
  <br/><br/>
