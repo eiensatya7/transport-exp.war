@@ -71,6 +71,7 @@
         background-color: #f6f6f6;
         padding: 2px;
         display: inline-block;
+    color: #44617d;
 }
 
 .typeSelector {
@@ -92,7 +93,7 @@
     
     font-size: 14px;
     text-decoration: none;
-}`
+}
 
 .tlast {
     border-right: 0px !important;
