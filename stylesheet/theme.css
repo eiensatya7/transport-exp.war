@@ -1,3 +1,31 @@
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot');
+    src: url('../fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto_regular_macroman/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/roboto_regular_macroman/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto_regular_macroman/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotothin';
+    src: url('../fonts/roboto_thin_macroman/Roboto-Thin-webfont.eot');
+    src: url('../fonts/roboto_thin_macroman/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto_thin_macroman/Roboto-Thin-webfont.woff') format('woff'),
+         url('../fonts/roboto_thin_macroman/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('../fonts/roboto_thin_macroman/Roboto-Thin-webfont.svg#robotothin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
 html {
 	overflow-y: scroll;
 }
@@ -32,7 +60,17 @@ h3{
     font-family: inherit;
 }
 input[type=submit], input[type=button] {
-	font-size: 14px;
+	cursor: pointer;
+    background-color: #2c3f51;
+    border: none;
+    border-bottom: 4px solid #a8b3bb;
+        padding: 3px 7px 3px 7px;
+
+}
+
+.buttonStl1{
+    
+    font-size: 14px;
 	cursor: pointer;
     background-color: #2c3f51;
     border: none;
@@ -41,10 +79,17 @@ input[type=submit], input[type=button] {
 }
 
 input[type=text], input[type=password], textarea {
-	font-size: 12px;
-	padding-left: 1px;
+	font-size: 14px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    border: 1px solid #e5e5e5;
+    border-bottom: 3px solid #d4d7d8;
+    padding-left: 5px;
 }
-
+input[type=text], input[type=password]{
+      height: 30px;
+    width: 216px;
+}
 select {
 	font-size: 14px;
     background-color: #ecf0f1;
@@ -56,15 +101,7 @@ select {
     
     
 }
-input[type="text"]{
-    	font-size: 14px;
-    background-color: #ecf0f1;
-    color: #2c3e50;
-    border: 1px solid #e5e5e5;
-    border-bottom: 3px solid #d4d7d8;
-    height: 30px;
-    width: 216px;
-}
+
 
 
 .tableControl, .actionButtons {
@@ -128,12 +165,13 @@ input[type="text"]{
 
 .name {
 	vertical-align: top;
-	font-weight: bold;
 	width: 115px;
 	float: left;
 	padding: 5px;
 	margin-top: 3px;
 	clear: left;
+    font-size: 13px;
+    
 }
 
 .value {
@@ -229,12 +267,20 @@ img.errors {
 }
 
 .actionButtons {
-	padding-left: 1px;
+	padding-left: 35px;
 }
 
 .actionButtons select {
 	margin: 5px 5px 5px 0;
 	vertical-align: bottom;
+}
+.rich-panel-header{
+    background: none;
+    border: none;
+    background-color: #fff;
+    font-family: robotothin;
+    font-size: 22px;
+    padding: 10px 0px 10px 0px;
 }
 .rich-toolbar{
     height: 40px;

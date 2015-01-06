@@ -9,16 +9,18 @@
     template="layout/template.xhtml">
 
 <ui:define name="body">
-
+    
+      
+    
 <link rel="stylesheet" type="text/css" href="stylesheet/style.css" />
     <h:form id="loginForm">
 
         <rich:panel>
             <f:facet name="header">Customer Login</f:facet>
 
+            <br/>
 			<center>
-            <p>Login here</p>
-
+            
 			
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
@@ -35,7 +37,7 @@
             </div>
             
              <div class="actionButtons">
-            	<h:commandButton id="submit" value="Login" action="#{identity.login}"/>
+            	<h:commandButton style="margin-right:10px" id="submit" value="Login" action="#{identity.login}"/>
             	#{''} <s:link styleClass= "linkText" value="Forgot Password" view="/customerforgotpassword.xhtml"/>
         	</div>
         	
