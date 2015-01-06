@@ -10,77 +10,30 @@
     template="hometemplate.xhtml">
 
 <ui:define name="body">
+    
+    <a4j:loadScript src="/js/jquery-1.11.2.min.js" />
 
+  <link rel="stylesheet" type="text/css" href="./stylesheet/flexslider.css" />  
+    <script src="./js/jquery.flexslider-min.js"/>
 <style type="text/css">
 
 
-.css3corner{
-border-radius: 5px 0px 5px 5px;
--moz-border-radius: 5px 0px 5px 5px;
--webkit-border-radius: 5px 0px 5px 5px;
-border: 3px solid #8DC3FF;
-
-font-weight:bold;
-
-background-color:#8AC0FF;
-width:90px;
-height:30px;
-
-color:#F5FFFA;
-}
-
-.css3cornerone{
-border-radius: 5px 0px 5px 5px;
--moz-border-radius: 5px 0px 5px 5px;
--webkit-border-radius: 5px 0px 5px 5px;
-border: 3px solid #8DC3FF;
-
-font-weight:bold;
-
-background-color:#8AC0FF;
-width:140px;
-height:30px;
-
-color:#F5FFFA;
-}
 
 
 .even {
-background-color: #ffffed; 
+background-color: #ecf0f1; 
 font-size: 10px;
 height:20px;
-font-family:Arial,Helvetica,sans-serif;
 font-weight:normal;
 }
 .odd {
-background-color: #fffffd; 
+background-color: #f3f7f8; 
 font-size: 10px;
 height:20px;
-font-family:Arial,Helvetica,sans-serif;
 font-weight:normal;
 }
 
-h2{
-font-family: Arial;
-font-size: 20px;
-color: #393939;
-border-bottom: 1px solid #D5D5D5;
-}
 
-h3{
-font-family: Arial;
-font-size: 17px;
-color: #454545;
-
-
-}
-
-h4{
-font-size: 15px;
-line-height: 4px;
-color: #555;
-font-weight: bold;
-}
 
 
 
@@ -89,6 +42,9 @@ font-weight: bold;
 
 
 <script type="text/javascript">
+    
+         jQuery.noConflict();  
+
    
     var curDt = new Date();
     disableBeforeToday = function(day) {
@@ -98,6 +54,17 @@ font-weight: bold;
             return false;
         
     }
+    
+
+    
+      jQuery(window).load(function() {
+          jQuery('.slider').flexslider({
+          directionNav:false,
+              controlsContainer: ".testimonialsClass",
+              smoothHeight: true
+          
+          });
+        });
 
    
     
@@ -1207,7 +1174,7 @@ font-weight: bold;
            
            <h:column>
              <f:facet name="header">
-                Sno
+                Snoaa
             </f:facet>
             <h:outputText value="#{row + 1}"/>
         
@@ -1329,6 +1296,28 @@ font-weight: bold;
 		   	
 		   	
            </rich:panel>
+                
+                <br/><br/>
+                <h1 style="font-size:22px">Testimonials</h1>
+                          <rich:panel styleClass="testimonialsClass">        
+  
+<div class="slider">
+  <ul class="slides">
+    <li>
+      <h3>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."</h3>
+        
+        <span class="author">- Sandeep Nambiar</span>
+    </li>
+    <li>
+      <h3>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. "</h3>
+        <span class="author">- Vishal Kandukuri</span>
+    </li>
+    
+  </ul>
+</div>
+                </rich:panel>
+ 
+                
             </td>
                 <td width="25%" style="padding-left:30px;padding-top:87px">
                     
@@ -1453,7 +1442,6 @@ font-weight: bold;
     </h:form>
  </s:div>
  <br/><br/>
- 
  
  
  

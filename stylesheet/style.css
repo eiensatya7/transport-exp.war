@@ -74,7 +74,6 @@
 
 .typeSelector {
     border: 1px solid #f1c40f;
-    display: inline-block;
     padding-top: 11px;
     padding-bottom: 11px;    
     margin-left: auto;
@@ -86,14 +85,16 @@
     
 }
 .typeSelector>a{
-    padding: 12px 7px 12px 7px;
+    padding: 12px 7px 12px 6px;
     color: inherit;
     border-right: 1px solid #f1c40f;
-    
     font-size: 14px;
     text-decoration: none;
+    margin: 0px;
 }
-
+.typeSelector>a:hover{
+    color: #f1c40f;
+}
 .tlast {
     border-right: 0px !important;
 }
@@ -103,7 +104,25 @@
     color: #fff !important;
 }
 .submitDivClass{
-    padding-top: 49px;
+    padding-top: 40px;
 }
+.testimonialsClass{
+    margin-top: 10px;
+}
+.slides li{
+    text-align: center;
+    vertical-align: middle;
+    color: #567798;
+}
+.slides .author{
+    text-align: right;
+    font-size: 16px;
+    display: block;
+    color: #2c3f51;
+    margin-right: 22px;
 
+}
+.slides h3{
+    padding: 0px 10px;
+}
 
