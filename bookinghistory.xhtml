@@ -30,13 +30,13 @@ color: #454545;
         
                <s:decorate id="fromdateId" template="edit.xhtml">
             <ui:define name="label">From Date</ui:define>
-            <rich:calendar value="#{customerDataAction.fromDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+            <rich:calendar buttonIcon="img/calbut.png" value="#{customerDataAction.fromDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
 
            </s:decorate>
            
              <s:decorate id="todateId" template="edit.xhtml">
             <ui:define name="label">To Date</ui:define>
-            <rich:calendar value="#{customerDataAction.toDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
+            <rich:calendar buttonIcon="img/calbut.png" value="#{customerDataAction.toDate}" datePattern="yyyy-MM-dd" popup="true" rendered="#{showGlobalMessages != 'false'}"></rich:calendar>
 
            </s:decorate>
 
