@@ -222,13 +222,13 @@ font-weight: bold;
 		    <table >
 		   	<tr>
 		   	<td>
-                		   	<h3>Pickup Date:</h3>
+                		   	<h3>Pickup Date Time:</h3>
 
 		   	</td>
 		   	</tr>
 		   	<tr>
 		   	<td>
-		   	<s:div id="datediv">
+		   	<s:div id="dateTimediv">
 		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/calbut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
 		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
 		   	</rich:calendar>
@@ -239,18 +239,12 @@ font-weight: bold;
 		    </td>
                <td>
 		    <table >
+		   	
 		   	<tr>
 		   	<td>
-                		   	<h3>Pickup Time:</h3>
-
-		   	</td>
-		   	</tr>
-		   	<tr>
-		   	<td>
-		   	<s:div id="timediv">
-		   	<rich:calendar value="#{bookingAction.travelDateptop}" isDayEnabled ="disableBeforeToday" buttonIcon="img/timebut.png" datePattern="yyyy-MM-dd HH:mm" popup="true" >
-		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
-		   	</rich:calendar>
+		  	<s:div styleClass="submitDivClass" id="submitdiv">
+		   	<a4j:commandButton  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="search" value="Search Cabs" styleClass="buttonStl1" action="#{bookingAction.searchCabs}" reRender="responseId"/>
+		   	
              </s:div>
 		   	</td>		   	
 		   	</tr>
@@ -265,10 +259,7 @@ font-weight: bold;
 		  
 		   	<tr>
 		   	<td >
-		   	<s:div id="submitdiv">
-		   	<a4j:commandButton  onclick="Richfaces.showModalPanel('processingMdlPanel')" oncomplete="Richfaces.hideModalPanel('processingMdlPanel')" id="search" value="Search Cabs" styleClass="buttonStl1" action="#{bookingAction.searchCabs}" reRender="responseId"/>
-		   	
-             </s:div>
+		   
 		   	</td>		   	
 		   	</tr>
 		    
