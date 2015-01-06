@@ -15,7 +15,6 @@
 
 .linkTextLogin{
 	line-height:28px;
-	font-family:Arial, Helvetica, sans-serif; 
 	font-size:15px; 
 	font-weight:bold; 
 	color:#228246; 
@@ -23,14 +22,10 @@
 }
 
 h2{
-font-family: Arial;
-font-size: 20px;
-color: #393939;
-border-bottom: 1px solid #D5D5D5;
+    color: #999;
 }
 
 h3{
-font-family: Arial;
 font-size: 16px;
 color: #454545;
 padding: 12px 0px 12px 20px;
@@ -52,37 +47,22 @@ font-weight: bold;
 }
 .detailsone{
 font-size: 13px;
-line-height: 22px;
 color: #555;
-font-weight: bold;
-}
-
-.css3corner{
-border-radius: 5px 0px 5px 5px;
--moz-border-radius: 5px 0px 5px 5px;
--webkit-border-radius: 5px 0px 5px 5px;
-border: 3px solid #8DC3FF;
-width:130px;
-height:40px;
-font-weight:bold;
-
-background-color:#8AC0FF;
-color:#F5FFFA;
+text-align: right;
+    
 }
 
 
 .even {
-background-color: #ffffed; 
+background-color: #ecf0f1; 
 font-size: 10px;
 height:20px;
-font-family:Arial,Helvetica,sans-serif;
 font-weight:normal;
 }
 .odd {
-background-color: #fffffd; 
+background-color: #f3f7f8; 
 font-size: 10px;
 height:20px;
-font-family:Arial,Helvetica,sans-serif;
 font-weight:normal;
 }
 
@@ -115,11 +95,13 @@ font-weight:normal;
  <table>
  <tr>
  <td style="width:700px;" valign="top">
+     <br />
+     <h1> Customer Travel Details</h1>
  <rich:panel>
             
-           <h2> Customer Travel Details</h2>
+           
             
-          <h3>Transport Selection Details</h3>
+          <h2>Transport Selection Details: </h2>
           
           <h:form id="booking" styleClass="edit" >
           
@@ -131,7 +113,7 @@ font-weight:normal;
 		   	
 		   	<td>
 		   	<s:div id="datetimediv">
-		   	<rich:calendar value="#{bookingAction.finalDate}" isDayEnabled ="disableBeforeToday" inputStyle="width:200px;height:20px;font-size:14px;" datePattern="yyyy-MM-dd HH:mm" popup="true" >
+		   	<rich:calendar buttonIcon="img/calbut.png" value="#{bookingAction.finalDate}" isDayEnabled ="disableBeforeToday"  datePattern="yyyy-MM-dd HH:mm" popup="true" >
 		   		 <a4j:support event="onselect" reRender="datetimediv" bypassUpdates="true" ajaxSingle="true"/>
 		   	</rich:calendar>
              </s:div>
@@ -142,7 +124,7 @@ font-weight:normal;
 		   	<td colspan="2">
 		   	<h:selectBooleanCheckbox value="#{bookingAction.copyRegisteredAddress}" >
 		   		<a4j:support event="onclick" action="#{bookingAction.setFullAddress}" reRender="addressdiv"  ajaxSingle="true" />
-		   	</h:selectBooleanCheckbox>&#160;
+		   	</h:selectBooleanCheckbox>
 		   	<h:outputText styleClass="detailsone" value="Pickup point address is same as registered address"/>
 		   	
 		   	</td>
@@ -150,16 +132,16 @@ font-weight:normal;
 		   	<tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
 		   	<tr>
 		   	<td style="padding-right:50px;" valign="top">
-		   	<b style="font-weight:600;font-size:12px;"> <h4> Full Address for Communication </h4> </b>
+		   	 <h4> Full Address for Communication </h4>
 		   	</td>
 		   	
 		   	<td>
 		   	<s:div id="addressdiv">
 		   	<h:inputTextarea id="address"
-                               cols="36"
+                               cols="30"
                                rows="6"
                                
-                               style="font-weight:600;font-size:12px;"
+                               
                               value="#{bookingAction.fullAddress}" required="true"/>
              </s:div>
 		   	</td>		   	
@@ -167,15 +149,15 @@ font-weight:normal;
 		   	
 		   	  	<tr>
 		   	<td style="padding-right:50px;" valign="top">
-		   	<b style="font-weight:600;font-size:12px;"> <h4> Remarks (If any) </h4> </b>
+		   	 <h4> Remarks (If any) </h4> 
 		   	</td>
 		   	
 		   	<td>
 		   	<s:div id="remarksdiv">
 		   	<h:inputTextarea id="remarks"
-                               cols="36"
+                               cols="30"
                                rows="6"
-                               style="font-weight:600;font-size:12px;"
+                               
                               value="#{bookingAction.remarks}" required="true"/>
              </s:div>
 		   	</td>		   	
@@ -183,20 +165,20 @@ font-weight:normal;
 		   	</table>
 		  
           
-          <h3>Customer Contact Details</h3> 
+          <h2>Customer Contact Details:</h2> 
            
            <table style="padding: 0px 0px 12px 32px;">
 		   	<tr>
 		   	<td style="padding-right:50px;">
-		   	<b style="font-weight:600;font-size:12px;"> <h4> Name in Full </h4> </b>
+		   <h4> Name in Full </h4>
 		   	</td>
 		   	
 		   	<td>
 		   	<s:div id="namediv">
 		    <h:inputText id="name"
-                             size="30"
+                           
                              
-                              value="#{bookingAction.fullName}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+                              value="#{bookingAction.fullName}"  required="true"/>
                               
                                
                               
@@ -206,28 +188,28 @@ font-weight:normal;
 		   	
 		   	<tr>
 		   	<td style="padding-right:50px;" valign="top">
-		   	<b style="font-weight:600;font-size:12px;"> <h4> Mobile No for Communication </h4> </b>
+		   	 <h4> Mobile No for Communication </h4> 
 		   	</td>
 		   	
 		   	<td>
 		   	<s:div id="mobilediv">
 		   	<h:inputText id="mobile"
-                               size="30"
-                              value="#{loggedInCustomer.contactNo}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+                              
+                              value="#{loggedInCustomer.contactNo}"  required="true" />
              </s:div>
 		   	</td>		   	
 		   	</tr>
 		   	
 		   	  	<tr>
 		   	<td style="padding-right:50px;" valign="top">
-		   	<b style="font-weight:600;font-size:12px;"> <h4> Email Id </h4> </b>
+		   	 <h4> Email Id </h4> 
 		   	</td>
 		   	
 		   	<td>
 		   	<s:div id="emaildiv">
 		   	<h:inputText id="email"
-                               size="30"
-                               value="#{loggedInCustomer.emailId}"  required="true" style="width:325px;height:25px;font-size:14px;"/>
+                              
+                               value="#{loggedInCustomer.emailId}"  required="true" />
              </s:div>
 		   	</td>		   	
 		   	</tr>
@@ -255,10 +237,11 @@ font-weight:normal;
          </rich:panel> 
  
  </td>
- <td style="width:320px;" valign="top">
+ <td style="width:320px;padding-top:70px" valign="top">
+      
  <rich:panel>
-            
-           <h2> Booking Details</h2>
+            <h2 style="margin-bottom:20px"> Booking Details :</h2>
+          
             <center>
                   
            		
