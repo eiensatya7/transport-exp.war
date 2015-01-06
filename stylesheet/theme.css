@@ -71,7 +71,7 @@ h3{
 .rich-toolbar-item{
     font-family: inherit;
 }
-input[type=submit], input[type=button] {
+input[type=submit], input[type=button], .cBlueButton {
 	cursor: pointer;
     background-color: #2c3f51;
     color:#ecf0f1;
@@ -79,7 +79,12 @@ input[type=submit], input[type=button] {
     border-bottom: 4px solid #a8b3bb;
     padding: 5px 10px 5px 10px;
 }
-input[type=submit]:hover, input[type=button]:hover {
+.cBlueButton{
+        padding: 5px 15px 5px 15px;
+    text-decoration: none;
+
+}
+input[type=submit]:hover, input[type=button]:hover, .cBlueButton:hover{
     background-color:#44617d;
     color:#f1c40f;
         border-bottom-color:  #b6c4ce;
