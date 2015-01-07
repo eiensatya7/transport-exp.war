@@ -161,7 +161,7 @@ color: #454545;
         
         <rich:column styleClass="action">
             <f:facet name="header">Action</f:facet>
-            <a4j:commandLink value="Cancel Booking" action="#{customerDataAction.cancelTicket}" onclick="Richfaces.showModalPanel('cancelPanel')" rendered="#{_booking.bookingStatus eq 'PENDING'}">
+            <a4j:commandLink value="Cancel Booking" action="#{customerDataAction.cancelTicket}" onclick="Richfaces.showModalPanel('cancelPanel')" styleClass="cBlueButton" rendered="#{_booking.bookingStatus eq 'PENDING'}">
                 <f:param name="bookingId"
                         value="#{_booking.id}"/>
             </a4j:commandLink>

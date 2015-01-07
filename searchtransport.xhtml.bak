@@ -1325,22 +1325,15 @@ font-weight:normal;
   <div class="testimonialsClass">
 <div class="slider">
   <ul class="slides">
-
-<ui:repeat value="#{bookingAction.testimonialList}" var="testimonial">
-        <li>
-         <h3>#{testimonial.testimonialContent}</h3>
+    <li>
+      <h3>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."</h3>
         
-        <span class="author">- #{testimonial.name}, 
-        <h:outputText value="#{testimonial.createdTime}" >
-        <s:convertDateTime type="both" dateStyle="short" pattern="MMM dd yyyy HH:mm"/>
-        </h:outputText>
-        </span>
-          
-        </li>
-    </ui:repeat>
-  
-
-
+        <span class="author">- Sandeep Nambiar</span>
+    </li>
+    <li>
+      <h3>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. "</h3>
+        <span class="author">- Vishal Kandukuri</span>
+    </li>
     
   </ul>
 </div>

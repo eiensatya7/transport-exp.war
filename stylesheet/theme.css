@@ -348,6 +348,9 @@ img.errors {
 .rich-table-cell{
     border-color: #2c3f51;
 }
+.rich-table-cell.action{
+        padding: 12px;
+}
 .rich-table{
     border-color: #2c3f51;
 }
@@ -394,10 +397,6 @@ td.action {
 	white-space: nowrap;
 }
 
-td.action a {
-	padding-left: 1px;
-	padding-right: 1px;
-}
 
 table.radio {
    border: 0;
